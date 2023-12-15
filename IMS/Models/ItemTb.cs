@@ -15,6 +15,7 @@ namespace IMS.Models
         public int ItemSalesRate { get; set; }
         public byte ItemStatus { get; set; }
         public int ItemClassId { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         public virtual ClassTb ItemClass { get; set; }
     }

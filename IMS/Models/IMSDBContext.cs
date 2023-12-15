@@ -71,8 +71,6 @@ namespace IMS.Models
                     .HasColumnType("date")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.GstId).HasColumnName("gst_id");
-
                 entity.Property(e => e.Igst)
                     .HasColumnName("IGST")
                     .HasColumnType("decimal(5, 2)");
@@ -123,6 +121,10 @@ namespace IMS.Models
                 entity.ToTable("itemTB");
 
                 entity.Property(e => e.ItemId).HasColumnName("item_id");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnName("created_at")
+                    .HasColumnType("date");
 
                 entity.Property(e => e.ItemClassId).HasColumnName("item_class_id");
 

@@ -10,16 +10,16 @@ using Microsoft.AspNetCore.Http;
 
 namespace IMS.Controllers
 {
-    public class suppliersController : Controller
+    public class classController : Controller
     {
         private readonly IMSDBContext _context;
 
-        public suppliersController(IMSDBContext context)
+        public classController(IMSDBContext context)
         {
             _context = context;
         }
 
-        // GET: suppliers
+        // GET: class
         public async Task<IActionResult> Index()
         {
             if (!HttpContext.Session.GetInt32("UserId").HasValue)
@@ -28,11 +28,11 @@ namespace IMS.Controllers
             }
             else
             {
-                return View(await _context.SupplierTb.ToListAsync());
+                return View(await _context.ClassTb.ToListAsync());
             }
         }
 
-        // GET: suppliers/Details/5
+        // GET: class/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,41 +40,40 @@ namespace IMS.Controllers
                 return NotFound();
             }
 
-            var supplierTb = await _context.SupplierTb
-                .FirstOrDefaultAsync(m => m.SupId == id);
-            if (supplierTb == null)
+            var classTb = await _context.ClassTb
+                .FirstOrDefaultAsync(m => m.ClassId == id);
+            if (classTb == null)
             {
                 return NotFound();
             }
 
-            return View(supplierTb);
+            return View(classTb);
         }
 
-        // GET: suppliers/Create
+        // GET: class/Create
         public IActionResult Create()
         {
-            ViewData["sttype"] = new SelectList(_context.StateTb, "StateName", "StateName");
             return View();
         }
 
-        // POST: suppliers/Create
+        // POST: class/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SupId,SupName,SupAddress,SupType,SupMobile,SupGstNumber")] SupplierTb supplierTb)
+        public async Task<IActionResult> Create([Bind("ClassId,ClassName,Cgst,Sgst,Igst,ClassStatus,CreatedAt")] ClassTb classTb)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(supplierTb);
+                classTb.Igst = classTb.Cgst + classTb.Sgst;
+                _context.Add(classTb);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["sttype"] = new SelectList(_context.StateTb, "StateName", "StateName", supplierTb.SupType);
-            return View(supplierTb);
+            return View(classTb);
         }
 
-        // GET: suppliers/Edit/5
+        // GET: class/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,23 +81,22 @@ namespace IMS.Controllers
                 return NotFound();
             }
 
-            var supplierTb = await _context.SupplierTb.FindAsync(id);
-            if (supplierTb == null)
+            var classTb = await _context.ClassTb.FindAsync(id);
+            if (classTb == null)
             {
                 return NotFound();
             }
-            ViewData["sttype"] = new SelectList(_context.StateTb, "StateName", "StateName");
-            return View(supplierTb);
+            return View(classTb);
         }
 
-        // POST: suppliers/Edit/5
+        // POST: class/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SupId,SupName,SupAddress,SupType,SupMobile,SupGstNumber")] SupplierTb supplierTb)
+        public async Task<IActionResult> Edit(int id, [Bind("ClassId,ClassName,Cgst,Sgst,Igst,ClassStatus,CreatedAt")] ClassTb classTb)
         {
-            if (id != supplierTb.SupId)
+            if (id != classTb.ClassId)
             {
                 return NotFound();
             }
@@ -107,14 +105,13 @@ namespace IMS.Controllers
             {
                 try
                 {
-                    ViewData["sttype"] = new SelectList(_context.StateTb, "StateName", "StateName", supplierTb.SupType);
-
-                    _context.Update(supplierTb);
+                    classTb.Igst = classTb.Cgst + classTb.Sgst;
+                    _context.Update(classTb);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SupplierTbExists(supplierTb.SupId))
+                    if (!ClassTbExists(classTb.ClassId))
                     {
                         return NotFound();
                     }
@@ -125,10 +122,10 @@ namespace IMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(supplierTb);
+            return View(classTb);
         }
 
-        // GET: suppliers/Delete/5
+        // GET: class/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,30 +133,30 @@ namespace IMS.Controllers
                 return NotFound();
             }
 
-            var supplierTb = await _context.SupplierTb
-                .FirstOrDefaultAsync(m => m.SupId == id);
-            if (supplierTb == null)
+            var classTb = await _context.ClassTb
+                .FirstOrDefaultAsync(m => m.ClassId == id);
+            if (classTb == null)
             {
                 return NotFound();
             }
 
-            return View(supplierTb);
+            return View(classTb);
         }
 
-        // POST: suppliers/Delete/5
+        // POST: class/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var supplierTb = await _context.SupplierTb.FindAsync(id);
-            _context.SupplierTb.Remove(supplierTb);
+            var classTb = await _context.ClassTb.FindAsync(id);
+            _context.ClassTb.Remove(classTb);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SupplierTbExists(int id)
+        private bool ClassTbExists(int id)
         {
-            return _context.SupplierTb.Any(e => e.SupId == id);
+            return _context.ClassTb.Any(e => e.ClassId == id);
         }
     }
 }
