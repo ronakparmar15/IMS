@@ -2,9 +2,10 @@
 
 @{
     ViewData["Title"] = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
-
+@* 
 <h1>Login</h1>
 
 <h4>UserTb</h4>
@@ -32,9 +33,94 @@
             </div>
         </form>
     </div>
-</div>
+</div> *@
 
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+    <meta name="description" content="POS - Bootstrap Admin Template">
+    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, invoice, html5, responsive, Projects">
+    <meta name="author" content="Dreamguys - Bootstrap Admin Template">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Login - Pos admin template</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="~/admin/img/favicon.png">
+
+    <link rel="stylesheet" href="~/admin/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/admin/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="~/admin/plugins/fontawesome/css/all.min.css">
+
+    <link rel="stylesheet" href="~/admin/css/style.css">
+</head>
+<body class="account-page">
+
+    <div class="main-wrapper">
+        <div class="account-content">
+            <div class="login-wrapper">
+                <div class="login-content">
+                    <div class="login-userset">
+                        <div class="login-logo">
+                            <img src="~/admin/img/logo.png" alt="img">
+                        </div>
+                        <div class="login-userheading">
+                            <h3>Sign In</h3>
+                            <h4>Please login to your account</h4>
+                        </div>
+                        <form asp-action="Login">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Username" class="control-label"></label>
+                                <input asp-for="Username" class="form-control" placeholder="Enter Username "/>
+                                @* //<img src="~/admin/img/icons/mail.svg" alt="img"> *@
+                                <span asp-validation-for="Username" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Password" class="control-label"></label>
+                                <input asp-for="Password" class="form-control" placeholder="Enter Password " />
+                                <span class="fas toggle-password fa-eye-slash"></span>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="RoleId" class="control-label"></label>
+                                <select asp-for="RoleId" class="form-control" asp-items="ViewBag.RoleId"></select>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Login" class="btn btn-primary" />
+                                
+                            </div>
+                        </form>
+
+                     
+                    </div>
+                </div>
+                <div class="login-img">
+                    <img src="~/admin/img/login.jpg" alt="img">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/admin/js/jquery-3.6.0.min.js"></script>
+
+    <script src="~/admin/js/feather.min.js"></script>
+
+    <script src="~/admin/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/admin/js/script.js"></script>
+</body>
+</html>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

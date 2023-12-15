@@ -22,8 +22,16 @@ namespace IMS.Controllers
         // GET: users
         public async Task<IActionResult> Index()
         {
-            var iMSDBContext = _context.UserTb.Include(u => u.Role);
-            return View(await iMSDBContext.ToListAsync());
+            if(!HttpContext.Session.GetInt32("UserId").HasValue)
+            {
+                return RedirectToAction(nameof(Login));
+            }
+            else
+            {
+                var iMSDBContext = _context.UserTb.Include(u => u.Role);
+                return View(await iMSDBContext.ToListAsync());
+            }
+            
         }
 
         // GET: users/Details/5
@@ -81,7 +89,7 @@ namespace IMS.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserTb newuser)
         {
-            var user = _context.UserTb.FirstOrDefault(u => u.Username == newuser.Username && u.Password == newuser.Password);
+            var user = _context.UserTb.FirstOrDefault(u => u.Username == newuser.Username && u.Password == newuser.Password && u.RoleId==newuser.RoleId);
 
             if (user != null)
             {
@@ -113,6 +121,16 @@ namespace IMS.Controllers
             }
             ViewData["RoleId"] = new SelectList(_context.RoleTb, "RoleId", "RoleName", userTb.RoleId);
             return View(userTb);
+        }
+
+        public IActionResult Logout()
+        {
+            // Clear user's session data
+            HttpContext.Session.Remove("UserId");
+            HttpContext.Session.Remove("UserName");
+
+            // Redirect to the login page or any other page after logout
+            return RedirectToAction(nameof(Login));
         }
 
         // POST: users/Edit/5

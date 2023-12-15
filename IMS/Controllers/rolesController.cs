@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IMS.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace IMS.Controllers
 {
@@ -21,7 +22,14 @@ namespace IMS.Controllers
         // GET: roles
         public async Task<IActionResult> Index()
         {
-            return View(await _context.RoleTb.ToListAsync());
+            if (!HttpContext.Session.GetInt32("UserId").HasValue)
+            {
+                return RedirectToAction("Login", "users");
+            }
+            else
+            {
+                return View(await _context.RoleTb.ToListAsync());
+            }
         }
 
         // GET: roles/Details/5

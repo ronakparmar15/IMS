@@ -1,5 +1,7 @@
 ﻿using IMS.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,7 +22,14 @@ namespace IMS.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (!HttpContext.Session.GetInt32("UserId").HasValue)
+            {
+                return RedirectToAction("Login", "users");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         public IActionResult Privacy()
