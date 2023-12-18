@@ -1,4 +1,4 @@
-﻿@model IEnumerable<IMS.Models.ClassTb>
+﻿@model IEnumerable<IMS.Models.GstTb>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,7 +14,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ClassName)
+                @Html.DisplayNameFor(model => model.GstName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Cgst)
@@ -26,13 +26,10 @@
                 @Html.DisplayNameFor(model => model.Igst)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClassStatus)
+                @Html.DisplayNameFor(model => model.Active)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gst)
             </th>
             <th></th>
         </tr>
@@ -41,7 +38,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ClassName)
+                @Html.DisplayFor(modelItem => item.GstName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Cgst)
@@ -53,18 +50,15 @@
                 @Html.DisplayFor(modelItem => item.Igst)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ClassStatus)
+                @Html.DisplayFor(modelItem => item.Active)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedAt)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Gst.GstName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ClassId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ClassId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ClassId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.GstId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.GstId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.GstId">Delete</a>
             </td>
         </tr>
 }

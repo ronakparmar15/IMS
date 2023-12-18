@@ -245,13 +245,7 @@
                         <a href="javascript:void(0);"><img src="~/admin/img/icons/users1.svg" alt="img"><span> Roles</span> <span class="menu-arrow"></span></a>
                         <ul>
                             <li><a asp-controller="roles" asp-action="Index">Role List</a></li>
-                            <li><a asp-controller="roles" asp-action="Create">Add Role </a></li>
-                           @*  <li><a href="supplierlist.html">Supplier List</a></li>
-                            <li><a href="addsupplier.html">Add Supplier </a></li>
-                            <li><a href="userlist.html">User List</a></li>
-                            <li><a href="adduser.html">Add User</a></li>
-                            <li><a href="storelist.html">Store List</a></li>
-                            <li><a href="addstore.html">Add Store</a></li> *@
+                            <li><a asp-controller="roles" asp-action="Create">Add Role </a></li>                       
                         </ul>
                     </li>
 
@@ -268,7 +262,7 @@
                             <li><a asp-controller="suppliers" asp-action="Index">Suppliers List</a></li>
                             <li><a asp-controller="suppliers" asp-action="Create">New Suppliers </a></li>
                         </ul>
-                    </li>
+                    </li>0
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="~/admin/img/icons/product.svg" alt="img"><span> Product</span> <span class="menu-arrow"></span></a>
                         <ul>
@@ -277,23 +271,19 @@
                             <li><a asp-controller="items" asp-action="Index">Product List</a></li>
                             <li><a asp-controller="items" asp-action="Create">Add Product</a></li>
                         </ul>
-                        </li>
+                    </li>
+                    <li class="submenu">
+                        <a href="javascript:void(0);"><img src="~/admin/img/icons/purchase1.svg" alt="img"><span> Purchase</span> <span class="menu-arrow"></span></a>
+                        <ul>
+                            <li><a asp-controller="purchase" asp-action="Index">Purchase List</a></li>
+                            <li><a asp-controller="purchase" asp-action="Create">Add Purchase</a></li>
+                        </ul>
+                    </li>
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="~/admin/img/icons/sales1.svg" alt="img"><span> Sales</span> <span class="menu-arrow"></span></a>
                             <ul>
-                                <li><a href="saleslist.html">Sales List</a></li>
-                                <li><a href="pos.html">POS</a></li>
-                                <li><a href="pos.html">New Sales</a></li>
-                                <li><a href="salesreturnlists.html">Sales Return List</a></li>
-                                <li><a href="createsalesreturns.html">New Sales Return</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="~/admin/img/icons/purchase1.svg" alt="img"><span> Purchase</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="purchaselist.html">Purchase List</a></li>
-                                <li><a href="addpurchase.html">Add Purchase</a></li>
-                                <li><a href="importpurchase.html">Import Purchase</a></li>
+                            <li><a asp-controller="sales" asp-action="Index">Sales List</a></li>
+                            <li><a asp-controller="sales" asp-action="Create">New Sales</a></li>
                             </ul>
                         </li>
                         <li class="submenu">
@@ -308,18 +298,18 @@
                         
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="~/admin/img/icons/return1.svg" alt="img"><span> Return</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="salesreturnlist.html">Sales Return List</a></li>
-                                <li><a href="createsalesreturn.html">Add Sales Return </a></li>
-                                <li><a href="purchasereturnlist.html">Purchase Return List</a></li>
-                                <li><a href="createpurchasereturn.html">Add Purchase Return </a></li>
+                        <ul>
+                            <li><a href="purchasereturnlist.html">Purchase Return List</a></li>
+                            <li><a href="createpurchasereturn.html">Add Purchase Return </a></li>
+                            <li><a href="salesreturnlist.html">Sales Return List</a></li>
+                            <li><a href="createsalesreturn.html">Add Sales Return </a></li>
                             </ul>
                         </li>
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="~/admin/img/icons/places.svg" alt="img"><span> Places</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="newstate.html">New State </a></li>
-                                <li><a href="statelist.html">State list</a></li>
+                        <ul>
+                            <li><a asp-controller="states" asp-action="Index">State list</a></li>
+                            <li><a asp-controller="states" asp-action="Create">New State </a></li>
                             </ul>
                         </li>
                       
@@ -345,13 +335,10 @@
                        
                         <li class="submenu">
                             <a href="javascript:void(0);"><img src="~/admin/img/icons/settings.svg" alt="img"><span> Settings</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a>General Settings</a></li>
-                                <li><a >Email Settings</a></li>
-                                <li><a>Payment Settings</a></li>
-                                <li><a>Currency Settings</a></li>
-                                <li><a>Group Permissions</a></li>
-                                <li><a>Tax Rates</a></li>
+                        <ul>
+                            
+                            <li><a asp-controller="gst" asp-action="Index">Tax Rates List</a></li>
+                            <li><a asp-controller="gst" asp-action="Create">Add Tax Rates</a></li>
                             </ul>
                         </li>
                     </ul>

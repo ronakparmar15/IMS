@@ -9,6 +9,12 @@ namespace IMS.Models
 {
     public partial class UserTb
     {
+        public UserTb()
+        {
+            PurchaseTb = new HashSet<PurchaseTb>();
+            SalesTb = new HashSet<SalesTb>();
+        }
+
         public int UserId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
@@ -18,5 +24,7 @@ namespace IMS.Models
         public DateTime CreatedAt { get; set; }
 
         public virtual RoleTb Role { get; set; }
+        public virtual ICollection<PurchaseTb> PurchaseTb { get; set; }
+        public virtual ICollection<SalesTb> SalesTb { get; set; }
     }
 }

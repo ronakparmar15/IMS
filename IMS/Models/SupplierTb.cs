@@ -9,11 +9,18 @@ namespace IMS.Models
 {
     public partial class SupplierTb
     {
+        public SupplierTb()
+        {
+            PurchaseTb = new HashSet<PurchaseTb>();
+        }
+
         public int SupId { get; set; }
         public string SupName { get; set; }
         public string SupAddress { get; set; }
         public string SupType { get; set; }
         public decimal SupMobile { get; set; }
         public string SupGstNumber { get; set; }
+
+        public virtual ICollection<PurchaseTb> PurchaseTb { get; set; }
     }
 }

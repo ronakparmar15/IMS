@@ -10,14 +10,25 @@ namespace IMS.Models
     public partial class PurchaseTb
     {
         public int PurId { get; set; }
-        public DateTime? PurDate { get; set; }
-        public int? SupId { get; set; }
-        public int? PurByUid { get; set; }
-        public double? TotalAmount { get; set; }
-        public double? CgstAmount { get; set; }
-        public double? SgstAmount { get; set; }
-        public double? IgstAmount { get; set; }
-        public double? GrandTotal { get; set; }
-        public DateTime? CreatedAt { get; set; }
+        public DateTime PerDate { get; set; }
+        public int SupId { get; set; }
+        public int ItemId { get; set; }
+        public int Qty { get; set; }
+        public double Total1 { get; set; }
+        public double? Discount { get; set; }
+        public double Total2 { get; set; }
+        public int GstId { get; set; }
+        public double CgstAmount { get; set; }
+        public double SgstAmount { get; set; }
+        public double IgstAmount { get; set; }
+        public double Total3 { get; set; }
+        public int UserId { get; set; }
+        public string Remark { get; set; }
+        public DateTime CreatedAt { get; set; }
+
+        public virtual GstTb Gst { get; set; }
+        public virtual ItemTb Item { get; set; }
+        public virtual SupplierTb Sup { get; set; }
+        public virtual UserTb User { get; set; }
     }
 }

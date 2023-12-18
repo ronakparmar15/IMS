@@ -6,35 +6,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IMS.Models;
-using Microsoft.AspNetCore.Http;
 
 namespace IMS.Controllers
 {
-    public class itemsController : Controller
+    public class statesController : Controller
     {
         private readonly IMSDBContext _context;
 
-        public itemsController(IMSDBContext context)
+        public statesController(IMSDBContext context)
         {
             _context = context;
         }
 
-        // GET: items
+        // GET: states
         public async Task<IActionResult> Index()
         {
-            if (!HttpContext.Session.GetInt32("UserId").HasValue)
-            {
-                return RedirectToAction("Login", "users");
-            }
-            else
-            {
-                var iMSDBContext = _context.ItemTb.Include(i => i.ItemClass);
-                return View(await iMSDBContext.ToListAsync());
-            }
-           
+            return View(await _context.StateTb.ToListAsync());
         }
 
-        // GET: items/Details/5
+        // GET: states/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,42 +32,39 @@ namespace IMS.Controllers
                 return NotFound();
             }
 
-            var itemTb = await _context.ItemTb
-                .Include(i => i.ItemClass)
-                .FirstOrDefaultAsync(m => m.ItemId == id);
-            if (itemTb == null)
+            var stateTb = await _context.StateTb
+                .FirstOrDefaultAsync(m => m.StateId == id);
+            if (stateTb == null)
             {
                 return NotFound();
             }
 
-            return View(itemTb);
+            return View(stateTb);
         }
 
-        // GET: items/Create
+        // GET: states/Create
         public IActionResult Create()
         {
-            ViewData["ItemClassId"] = new SelectList(_context.ClassTb, "ClassId", "ClassName");
             return View();
         }
 
-        // POST: items/Create
+        // POST: states/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ItemId,ItemName,ItemPurchaseRate,ItemSalesRate,ItemStatus,ItemClassId,ItemHsn,CreatedAt")] ItemTb itemTb)
+        public async Task<IActionResult> Create([Bind("StateId,StateName")] StateTb stateTb)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(itemTb);
+                _context.Add(stateTb);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ItemClassId"] = new SelectList(_context.ClassTb, "ClassId", "ClassName", itemTb.ItemClassId);
-            return View(itemTb);
+            return View(stateTb);
         }
 
-        // GET: items/Edit/5
+        // GET: states/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,23 +72,22 @@ namespace IMS.Controllers
                 return NotFound();
             }
 
-            var itemTb = await _context.ItemTb.FindAsync(id);
-            if (itemTb == null)
+            var stateTb = await _context.StateTb.FindAsync(id);
+            if (stateTb == null)
             {
                 return NotFound();
             }
-            ViewData["ItemClassId"] = new SelectList(_context.ClassTb, "ClassId", "ClassName", itemTb.ItemClassId);
-            return View(itemTb);
+            return View(stateTb);
         }
 
-        // POST: items/Edit/5
+        // POST: states/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ItemId,ItemName,ItemPurchaseRate,ItemSalesRate,ItemStatus,ItemClassId,ItemHsn,CreatedAt")] ItemTb itemTb)
+        public async Task<IActionResult> Edit(int id, [Bind("StateId,StateName")] StateTb stateTb)
         {
-            if (id != itemTb.ItemId)
+            if (id != stateTb.StateId)
             {
                 return NotFound();
             }
@@ -110,12 +96,12 @@ namespace IMS.Controllers
             {
                 try
                 {
-                    _context.Update(itemTb);
+                    _context.Update(stateTb);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ItemTbExists(itemTb.ItemId))
+                    if (!StateTbExists(stateTb.StateId))
                     {
                         return NotFound();
                     }
@@ -126,11 +112,10 @@ namespace IMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ItemClassId"] = new SelectList(_context.ClassTb, "ClassId", "ClassName", itemTb.ItemClassId);
-            return View(itemTb);
+            return View(stateTb);
         }
 
-        // GET: items/Delete/5
+        // GET: states/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,31 +123,30 @@ namespace IMS.Controllers
                 return NotFound();
             }
 
-            var itemTb = await _context.ItemTb
-                .Include(i => i.ItemClass)
-                .FirstOrDefaultAsync(m => m.ItemId == id);
-            if (itemTb == null)
+            var stateTb = await _context.StateTb
+                .FirstOrDefaultAsync(m => m.StateId == id);
+            if (stateTb == null)
             {
                 return NotFound();
             }
 
-            return View(itemTb);
+            return View(stateTb);
         }
 
-        // POST: items/Delete/5
+        // POST: states/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var itemTb = await _context.ItemTb.FindAsync(id);
-            _context.ItemTb.Remove(itemTb);
+            var stateTb = await _context.StateTb.FindAsync(id);
+            _context.StateTb.Remove(stateTb);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ItemTbExists(int id)
+        private bool StateTbExists(int id)
         {
-            return _context.ItemTb.Any(e => e.ItemId == id);
+            return _context.StateTb.Any(e => e.StateId == id);
         }
     }
 }

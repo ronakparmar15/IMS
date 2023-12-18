@@ -21,7 +21,9 @@ namespace IMS.Models
         public decimal Igst { get; set; }
         public byte ClassStatus { get; set; }
         public DateTime CreatedAt { get; set; }
+        public int? GstId { get; set; }
 
+        public virtual GstTb Gst { get; set; }
         public virtual ICollection<ItemTb> ItemTb { get; set; }
     }
 }

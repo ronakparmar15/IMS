@@ -26,6 +26,9 @@
                 @Html.DisplayNameFor(model => model.ItemStatus)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.ItemHsn)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.CreatedAt)
             </th>
             <th>
@@ -48,6 +51,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ItemStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ItemHsn)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CreatedAt)

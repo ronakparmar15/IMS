@@ -9,14 +9,23 @@ namespace IMS.Models
 {
     public partial class ItemTb
     {
+        public ItemTb()
+        {
+            PurchaseTb = new HashSet<PurchaseTb>();
+            SalesTb = new HashSet<SalesTb>();
+        }
+
         public int ItemId { get; set; }
         public string ItemName { get; set; }
         public int ItemPurchaseRate { get; set; }
         public int ItemSalesRate { get; set; }
         public byte ItemStatus { get; set; }
         public int ItemClassId { get; set; }
+        public string ItemHsn { get; set; }
         public DateTime? CreatedAt { get; set; }
 
         public virtual ClassTb ItemClass { get; set; }
+        public virtual ICollection<PurchaseTb> PurchaseTb { get; set; }
+        public virtual ICollection<SalesTb> SalesTb { get; set; }
     }
 }

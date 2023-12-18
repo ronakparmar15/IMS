@@ -28,7 +28,8 @@ namespace IMS.Controllers
             }
             else
             {
-                return View(await _context.ClassTb.ToListAsync());
+                var iMSDBContext = _context.ClassTb.Include(c => c.Gst);
+                return View(await iMSDBContext.ToListAsync());
             }
         }
 
@@ -41,6 +42,7 @@ namespace IMS.Controllers
             }
 
             var classTb = await _context.ClassTb
+                .Include(c => c.Gst)
                 .FirstOrDefaultAsync(m => m.ClassId == id);
             if (classTb == null)
             {
@@ -53,6 +55,7 @@ namespace IMS.Controllers
         // GET: class/Create
         public IActionResult Create()
         {
+            ViewData["GstId"] = new SelectList(_context.GstTb, "GstId", "GstName");
             return View();
         }
 
@@ -61,15 +64,23 @@ namespace IMS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ClassId,ClassName,Cgst,Sgst,Igst,ClassStatus,CreatedAt")] ClassTb classTb)
+        public async Task<IActionResult> Create([Bind("ClassId,ClassName,Cgst,Sgst,Igst,ClassStatus,CreatedAt,GstId")] ClassTb classTb)
         {
             if (ModelState.IsValid)
             {
-                classTb.Igst = classTb.Cgst + classTb.Sgst;
+                //888
+                var data=_context.GstTb.FirstOrDefault(m => m.GstId == classTb.GstId);
+
+                classTb.Cgst = data.Cgst;
+                classTb.Sgst = data.Sgst;
+                classTb.Igst= data.Igst;
+                
                 _context.Add(classTb);
+                
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["GstId"] = new SelectList(_context.GstTb, "GstId", "GstName", classTb.GstId);
             return View(classTb);
         }
 
@@ -86,6 +97,7 @@ namespace IMS.Controllers
             {
                 return NotFound();
             }
+            ViewData["GstId"] = new SelectList(_context.GstTb, "GstId", "GstName", classTb.GstId);
             return View(classTb);
         }
 
@@ -94,7 +106,7 @@ namespace IMS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClassId,ClassName,Cgst,Sgst,Igst,ClassStatus,CreatedAt")] ClassTb classTb)
+        public async Task<IActionResult> Edit(int id, [Bind("ClassId,ClassName,Cgst,Sgst,Igst,ClassStatus,CreatedAt,GstId")] ClassTb classTb)
         {
             if (id != classTb.ClassId)
             {
@@ -105,7 +117,13 @@ namespace IMS.Controllers
             {
                 try
                 {
-                    classTb.Igst = classTb.Cgst + classTb.Sgst;
+                    //8888
+                    var data = _context.GstTb.FirstOrDefault(m => m.GstId == classTb.GstId);
+
+                    classTb.Cgst = data.Cgst;
+                    classTb.Sgst = data.Sgst;
+                    classTb.Igst = data.Igst;
+
                     _context.Update(classTb);
                     await _context.SaveChangesAsync();
                 }
@@ -122,6 +140,7 @@ namespace IMS.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["GstId"] = new SelectList(_context.GstTb, "GstId", "GstName", classTb.GstId);
             return View(classTb);
         }
 
@@ -134,6 +153,7 @@ namespace IMS.Controllers
             }
 
             var classTb = await _context.ClassTb
+                .Include(c => c.Gst)
                 .FirstOrDefaultAsync(m => m.ClassId == id);
             if (classTb == null)
             {

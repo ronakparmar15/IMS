@@ -23,10 +23,8 @@ namespace IMS.Models
         public virtual DbSet<ClassTb> ClassTb { get; set; }
         public virtual DbSet<GstTb> GstTb { get; set; }
         public virtual DbSet<ItemTb> ItemTb { get; set; }
-        public virtual DbSet<PurchaseDetailTb> PurchaseDetailTb { get; set; }
         public virtual DbSet<PurchaseTb> PurchaseTb { get; set; }
         public virtual DbSet<RoleTb> RoleTb { get; set; }
-        public virtual DbSet<SalesDetailTb> SalesDetailTb { get; set; }
         public virtual DbSet<SalesTb> SalesTb { get; set; }
         public virtual DbSet<StateTb> StateTb { get; set; }
         public virtual DbSet<SupplierTb> SupplierTb { get; set; }
@@ -71,6 +69,8 @@ namespace IMS.Models
                     .HasColumnType("date")
                     .HasDefaultValueSql("(getdate())");
 
+                entity.Property(e => e.GstId).HasColumnName("gst_id");
+
                 entity.Property(e => e.Igst)
                     .HasColumnName("IGST")
                     .HasColumnType("decimal(5, 2)");
@@ -78,6 +78,11 @@ namespace IMS.Models
                 entity.Property(e => e.Sgst)
                     .HasColumnName("SGST")
                     .HasColumnType("decimal(5, 2)");
+
+                entity.HasOne(d => d.Gst)
+                    .WithMany(p => p.ClassTb)
+                    .HasForeignKey(d => d.GstId)
+                    .HasConstraintName("FK_classTB_gstTB");
             });
 
             modelBuilder.Entity<GstTb>(entity =>
@@ -88,7 +93,9 @@ namespace IMS.Models
 
                 entity.Property(e => e.GstId).HasColumnName("gst_id");
 
-                entity.Property(e => e.Active).HasColumnName("active");
+                entity.Property(e => e.Active)
+                    .HasColumnName("active")
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Cgst)
                     .HasColumnName("CGST")
@@ -124,9 +131,15 @@ namespace IMS.Models
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
-                    .HasColumnType("date");
+                    .HasColumnType("date")
+                    .HasDefaultValueSql("(getdate())");
 
                 entity.Property(e => e.ItemClassId).HasColumnName("item_class_id");
+
+                entity.Property(e => e.ItemHsn)
+                    .HasColumnName("item_HSN")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ItemName)
                     .IsRequired()
@@ -149,45 +162,13 @@ namespace IMS.Models
                     .HasConstraintName("FK_classTB_itemTB");
             });
 
-            modelBuilder.Entity<PurchaseDetailTb>(entity =>
-            {
-                entity.HasKey(e => e.PurDetailId);
-
-                entity.ToTable("purchaseDetailTB");
-
-                entity.Property(e => e.PurDetailId)
-                    .HasColumnName("pur_detail_id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.CreatedAt)
-                    .HasColumnName("created_at")
-                    .HasColumnType("date")
-                    .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.Discount).HasColumnName("discount");
-
-                entity.Property(e => e.GstId).HasColumnName("gst_id");
-
-                entity.Property(e => e.ItemId).HasColumnName("item_id");
-
-                entity.Property(e => e.PurId).HasColumnName("pur_id");
-
-                entity.Property(e => e.Qty).HasColumnName("qty");
-
-                entity.Property(e => e.TotalPrice).HasColumnName("total_price");
-
-                entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
-            });
-
             modelBuilder.Entity<PurchaseTb>(entity =>
             {
                 entity.HasKey(e => e.PurId);
 
                 entity.ToTable("purchaseTB");
 
-                entity.Property(e => e.PurId)
-                    .HasColumnName("pur_id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.PurId).HasColumnName("pur_id");
 
                 entity.Property(e => e.CgstAmount).HasColumnName("CGST_amount");
 
@@ -196,21 +177,62 @@ namespace IMS.Models
                     .HasColumnType("date")
                     .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.GrandTotal).HasColumnName("grand_total");
+                entity.Property(e => e.Discount)
+                    .HasColumnName("discount")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.GstId).HasColumnName("gst_id");
 
                 entity.Property(e => e.IgstAmount).HasColumnName("IGST_amount");
 
-                entity.Property(e => e.PurByUid).HasColumnName("pur_by_uid");
+                entity.Property(e => e.ItemId).HasColumnName("item_id");
 
-                entity.Property(e => e.PurDate)
-                    .HasColumnName("pur_date")
+                entity.Property(e => e.PerDate)
+                    .HasColumnName("per_date")
                     .HasColumnType("date");
+
+                entity.Property(e => e.Qty).HasColumnName("qty");
+
+                entity.Property(e => e.Remark)
+                    .HasColumnName("remark")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.SgstAmount).HasColumnName("SGST_amount");
 
                 entity.Property(e => e.SupId).HasColumnName("sup_id");
 
-                entity.Property(e => e.TotalAmount).HasColumnName("total_amount");
+                entity.Property(e => e.Total1).HasColumnName("total1");
+
+                entity.Property(e => e.Total2).HasColumnName("total2");
+
+                entity.Property(e => e.Total3).HasColumnName("total3");
+
+                entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.Gst)
+                    .WithMany(p => p.PurchaseTb)
+                    .HasForeignKey(d => d.GstId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_purchaseTB_gstTB");
+
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.PurchaseTb)
+                    .HasForeignKey(d => d.ItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_purchaseTB_itemTB");
+
+                entity.HasOne(d => d.Sup)
+                    .WithMany(p => p.PurchaseTb)
+                    .HasForeignKey(d => d.SupId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_purchaseTB_supplierTB");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.PurchaseTb)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_purchaseTB_userTB");
             });
 
             modelBuilder.Entity<RoleTb>(entity =>
@@ -241,47 +263,22 @@ namespace IMS.Models
                 entity.Property(e => e.RoleStatus).HasColumnName("role_status");
             });
 
-            modelBuilder.Entity<SalesDetailTb>(entity =>
-            {
-                entity.HasKey(e => e.SalesDetailId);
-
-                entity.ToTable("salesDetailTB");
-
-                entity.Property(e => e.SalesDetailId)
-                    .HasColumnName("sales_detail_id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.GstId).HasColumnName("gst_id");
-
-                entity.Property(e => e.ItemId).HasColumnName("item_id");
-
-                entity.Property(e => e.Qty).HasColumnName("qty");
-
-                entity.Property(e => e.SalesId).HasColumnName("sales_id");
-
-                entity.Property(e => e.TotalPrice).HasColumnName("total_price");
-
-                entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
-            });
-
             modelBuilder.Entity<SalesTb>(entity =>
             {
                 entity.HasKey(e => e.SalesId);
 
                 entity.ToTable("salesTB");
 
-                entity.Property(e => e.SalesId)
-                    .HasColumnName("sales_id")
-                    .ValueGeneratedNever();
+                entity.Property(e => e.SalesId).HasColumnName("sales_id");
 
                 entity.Property(e => e.CgstAmount).HasColumnName("CGST_amount");
 
                 entity.Property(e => e.CreatedAt)
                     .HasColumnName("created_at")
-                    .HasColumnType("date")
-                    .HasDefaultValueSql("(getdate())");
+                    .HasColumnType("date");
 
                 entity.Property(e => e.CustomerAddress)
+                    .IsRequired()
                     .HasColumnName("customer_address")
                     .HasMaxLength(70)
                     .IsUnicode(false);
@@ -291,28 +288,63 @@ namespace IMS.Models
                     .HasColumnType("numeric(18, 0)");
 
                 entity.Property(e => e.CustomerName)
+                    .IsRequired()
                     .HasColumnName("customer_name")
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.GrandTotal).HasColumnName("grand_total");
+                entity.Property(e => e.Discount).HasColumnName("discount");
+
+                entity.Property(e => e.GstId).HasColumnName("gst_id");
 
                 entity.Property(e => e.IgstAmount).HasColumnName("IGST_amount");
+
+                entity.Property(e => e.ItemId).HasColumnName("item_id");
+
+                entity.Property(e => e.Qty).HasColumnName("qty");
+
+                entity.Property(e => e.Remark)
+                    .HasColumnName("remark")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.SalesDate)
                     .HasColumnName("sales_date")
                     .HasColumnType("date");
 
-                entity.Property(e => e.SalesType)
-                    .HasColumnName("sales_type")
+                entity.Property(e => e.SalesTyep)
+                    .IsRequired()
+                    .HasColumnName("sales_tyep")
                     .HasMaxLength(6)
                     .IsUnicode(false);
 
                 entity.Property(e => e.SgstAmount).HasColumnName("SGST_amount");
 
-                entity.Property(e => e.TotalAmount).HasColumnName("total_amount");
+                entity.Property(e => e.Total1).HasColumnName("total1");
+
+                entity.Property(e => e.Total2).HasColumnName("total2");
+
+                entity.Property(e => e.Total3).HasColumnName("total3");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
+
+                entity.HasOne(d => d.Gst)
+                    .WithMany(p => p.SalesTb)
+                    .HasForeignKey(d => d.GstId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_salesTB_gstTB");
+
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.SalesTb)
+                    .HasForeignKey(d => d.ItemId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_salesTB_itemTB");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.SalesTb)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_salesTB_userTB");
             });
 
             modelBuilder.Entity<StateTb>(entity =>
