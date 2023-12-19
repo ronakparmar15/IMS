@@ -15,8 +15,10 @@ namespace IMS.Models
         public string CustomerName { get; set; }
         public string CustomerAddress { get; set; }
         public decimal CustomerMobile { get; set; }
+        public string CustomerType { get; set; }
         public int ItemId { get; set; }
         public int Qty { get; set; }
+        public double UnitPrice { get; set; }
         public double Total1 { get; set; }
         public double? Discount { get; set; }
         public double Total2 { get; set; }

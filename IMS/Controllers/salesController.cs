@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IMS.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace IMS.Controllers
 {
@@ -52,6 +53,9 @@ namespace IMS.Controllers
             ViewData["GstId"] = new SelectList(_context.GstTb, "GstId", "GstName");
             ViewData["ItemId"] = new SelectList(_context.ItemTb, "ItemId", "ItemName");
             ViewData["UserId"] = new SelectList(_context.UserTb, "UserId", "Password");
+
+            ViewData["sttype"] = new SelectList(_context.StateTb, "StateName", "StateName");
+
             return View();
         }
 
@@ -60,17 +64,69 @@ namespace IMS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SalesId,SalesTyep,SalesDate,CustomerName,CustomerAddress,CustomerMobile,ItemId,Qty,Total1,Discount,Total2,GstId,CgstAmount,SgstAmount,IgstAmount,Total3,Remark,UserId,CreatedAt")] SalesTb salesTb)
+        public async Task<IActionResult> Create([Bind("SalesId,SalesTyep,SalesDate,CustomerName,CustomerAddress,CustomerMobile,CustomerType,ItemId,Qty,UnitPrice,Total1,Discount,Total2,GstId,CgstAmount,SgstAmount,IgstAmount,Total3,Remark,UserId,CreatedAt")] SalesTb salesTb)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(salesTb);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var itemdata = _context.ItemTb.FirstOrDefault(i => i.ItemId == salesTb.ItemId);
+                var classdata = _context.ClassTb.FirstOrDefault(c => c.ClassId == itemdata.ItemClassId);
+                var gstdata = _context.GstTb.FirstOrDefault(g => g.GstId == classdata.GstId);
+                var purchasedata = _context.PurchaseTb.FirstOrDefault(p => p.ItemId == salesTb.ItemId);
+
+                //var purdata = _context.PurchaseTb.Count();
+
+                int total_sold_item = _context.SalesTb.Where(i => i.ItemId == salesTb.ItemId).Sum(i => i.Qty); 
+                int total_purchase_item = _context.PurchaseTb.Where(i => i.ItemId == salesTb.ItemId).Sum(i => i.Qty);
+
+
+                if ((salesTb.Qty+total_sold_item) <= total_purchase_item)
+                {
+                    if (salesTb.UnitPrice >= itemdata.ItemSalesRate)
+                    {
+                        salesTb.UnitPrice = salesTb.UnitPrice;
+                        salesTb.Total1 = salesTb.UnitPrice * salesTb.Qty;
+                        salesTb.Total2 = (double)(salesTb.Total1 - (salesTb.Discount * salesTb.Total1) / 100);
+                        salesTb.GstId = gstdata.GstId;
+
+                        if (salesTb.CustomerType == "gujarat")
+                        {
+                            salesTb.CgstAmount = (salesTb.Total2 * (float)gstdata.Cgst) / 100;
+                            salesTb.SgstAmount = (salesTb.Total2 * (float)gstdata.Sgst) / 100;
+                            salesTb.IgstAmount = 0;
+                        }
+                        else
+                        {
+                            salesTb.CgstAmount = 0;
+                            salesTb.SgstAmount = 0;
+                            salesTb.IgstAmount = (salesTb.Total2 * (float)gstdata.Igst) / 100;
+                        }
+
+                        salesTb.Total3 = salesTb.Total2 + salesTb.CgstAmount + salesTb.SgstAmount + salesTb.IgstAmount;
+                        salesTb.UserId = (int)HttpContext.Session.GetInt32("UserId");
+
+
+                        _context.Add(salesTb);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        //salesTb.UnitPrice = itemdata.ItemSalesRate;
+                        //price <=sellingprice
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                }
+                else
+                {
+                    //qty not available
+                    return RedirectToAction(nameof(Index));
+                }
             }
             ViewData["GstId"] = new SelectList(_context.GstTb, "GstId", "GstName", salesTb.GstId);
             ViewData["ItemId"] = new SelectList(_context.ItemTb, "ItemId", "ItemName", salesTb.ItemId);
             ViewData["UserId"] = new SelectList(_context.UserTb, "UserId", "Password", salesTb.UserId);
+            ViewData["sttype"] = new SelectList(_context.StateTb, "StateName", "StateName", salesTb.CustomerType);
             return View(salesTb);
         }
 
@@ -98,7 +154,7 @@ namespace IMS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("SalesId,SalesTyep,SalesDate,CustomerName,CustomerAddress,CustomerMobile,ItemId,Qty,Total1,Discount,Total2,GstId,CgstAmount,SgstAmount,IgstAmount,Total3,Remark,UserId,CreatedAt")] SalesTb salesTb)
+        public async Task<IActionResult> Edit(int id, [Bind("SalesId,SalesTyep,SalesDate,CustomerName,CustomerAddress,CustomerMobile,CustomerType,ItemId,Qty,UnitPrice,Total1,Discount,Total2,GstId,CgstAmount,SgstAmount,IgstAmount,Total3,Remark,UserId,CreatedAt")] SalesTb salesTb)
         {
             if (id != salesTb.SalesId)
             {
@@ -109,8 +165,62 @@ namespace IMS.Controllers
             {
                 try
                 {
-                    _context.Update(salesTb);
-                    await _context.SaveChangesAsync();
+
+                    var itemdata = _context.ItemTb.FirstOrDefault(i => i.ItemId == salesTb.ItemId);
+                    var classdata = _context.ClassTb.FirstOrDefault(c=>c.ClassId==itemdata.ItemClassId);
+                    var gstdata = _context.GstTb.FirstOrDefault(g => g.GstId == classdata.GstId);
+                    var purchasedata = _context.PurchaseTb.FirstOrDefault(p => p.ItemId == salesTb.ItemId);
+
+
+                    //int total_sold_item = _context.SalesTb.Where(i => i.ItemId == salesTb.ItemId).Sum(i => i.Qty);
+                    //int total_purchase_item = _context.PurchaseTb.Where(i => i.ItemId == salesTb.ItemId).Sum(i => i.Qty);
+
+
+                    //if ((salesTb.Qty + total_sold_item) <= total_purchase_item)
+                    //{
+                    //    if (salesTb.UnitPrice >= itemdata.ItemSalesRate)
+                    //    {
+                    //        salesTb.UnitPrice = salesTb.UnitPrice;
+                    //        salesTb.Total1 = salesTb.UnitPrice * salesTb.Qty;
+                    //        salesTb.Total2 = (double)(salesTb.Total1 - (salesTb.Discount * salesTb.Total1) / 100);
+                    //        salesTb.GstId = gstdata.GstId;
+
+                    //        if (salesTb.CustomerType == "gujarat")
+                    //        {
+                    //            salesTb.CgstAmount = (salesTb.Total2 * (float)gstdata.Cgst) / 100;
+                    //            salesTb.SgstAmount = (salesTb.Total2 * (float)gstdata.Sgst) / 100;
+                    //            salesTb.IgstAmount = 0;
+                    //        }
+                    //        else
+                    //        {
+                    //            salesTb.CgstAmount = 0;
+                    //            salesTb.SgstAmount = 0;
+                    //            salesTb.IgstAmount = (salesTb.Total2 * (float)gstdata.Igst) / 100;
+                    //        }
+
+                    //        salesTb.Total3 = salesTb.Total2 + salesTb.CgstAmount + salesTb.SgstAmount + salesTb.IgstAmount;
+                    //        salesTb.UserId = (int)HttpContext.Session.GetInt32("UserId");
+
+
+                    //        _context.Add(salesTb);
+                    //        await _context.SaveChangesAsync();
+                    //        return RedirectToAction(nameof(Index));
+                    //    }
+                    //    else
+                    //    {
+                    //        //salesTb.UnitPrice = itemdata.ItemSalesRate;
+                    //        //price <=sellingprice
+                    //        return RedirectToAction(nameof(Index));
+                    //    }
+
+                    //}
+                    //else
+                    //{
+                    //    //qty not available
+                    //    return RedirectToAction(nameof(Index));
+                    //}
+                    ////_context.Update(salesTb);
+                    ////await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -123,7 +233,7 @@ namespace IMS.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
             }
             ViewData["GstId"] = new SelectList(_context.GstTb, "GstId", "GstName", salesTb.GstId);
             ViewData["ItemId"] = new SelectList(_context.ItemTb, "ItemId", "ItemName", salesTb.ItemId);

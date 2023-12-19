@@ -40,9 +40,9 @@
                 <span asp-validation-for="CustomerMobile" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ItemId" class="control-label"></label>
-                <select asp-for="ItemId" class="form-control" asp-items="ViewBag.ItemId"></select>
-                <span asp-validation-for="ItemId" class="text-danger"></span>
+                <label asp-for="CustomerType" class="control-label"></label>
+                <input asp-for="CustomerType" class="form-control" />
+                <span asp-validation-for="CustomerType" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Qty" class="control-label"></label>
@@ -50,9 +50,9 @@
                 <span asp-validation-for="Qty" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Total1" class="control-label"></label>
-                <input asp-for="Total1" class="form-control" />
-                <span asp-validation-for="Total1" class="text-danger"></span>
+                <label asp-for="UnitPrice" class="control-label"></label>
+                <input asp-for="UnitPrice" class="form-control" />
+                <span asp-validation-for="UnitPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Discount" class="control-label"></label>
@@ -60,49 +60,9 @@
                 <span asp-validation-for="Discount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Total2" class="control-label"></label>
-                <input asp-for="Total2" class="form-control" />
-                <span asp-validation-for="Total2" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GstId" class="control-label"></label>
-                <select asp-for="GstId" class="form-control" asp-items="ViewBag.GstId"></select>
-                <span asp-validation-for="GstId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CgstAmount" class="control-label"></label>
-                <input asp-for="CgstAmount" class="form-control" />
-                <span asp-validation-for="CgstAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SgstAmount" class="control-label"></label>
-                <input asp-for="SgstAmount" class="form-control" />
-                <span asp-validation-for="SgstAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="IgstAmount" class="control-label"></label>
-                <input asp-for="IgstAmount" class="form-control" />
-                <span asp-validation-for="IgstAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Total3" class="control-label"></label>
-                <input asp-for="Total3" class="form-control" />
-                <span asp-validation-for="Total3" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Remark" class="control-label"></label>
                 <input asp-for="Remark" class="form-control" />
                 <span asp-validation-for="Remark" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedAt" class="control-label"></label>
-                <input asp-for="CreatedAt" class="form-control" />
-                <span asp-validation-for="CreatedAt" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

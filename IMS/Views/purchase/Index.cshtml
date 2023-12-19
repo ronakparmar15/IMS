@@ -20,6 +20,9 @@
                 @Html.DisplayNameFor(model => model.Qty)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Total1)
             </th>
             <th>
@@ -71,6 +74,9 @@
                 @Html.DisplayFor(modelItem => item.Qty)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Total1)
             </td>
             <td>
@@ -104,7 +110,7 @@
                 @Html.DisplayFor(modelItem => item.Item.ItemName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Sup.SupAddress)
+                @Html.DisplayFor(modelItem => item.Sup.SupName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.User.Password)

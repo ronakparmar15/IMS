@@ -63,20 +63,20 @@ namespace IMS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PurId,PerDate,SupId,ItemId,Qty,Total1,Discount,Total2,GstId,CgstAmount,SgstAmount,IgstAmount,Total3,UserId,Remark,CreatedAt")] PurchaseTb purchaseTb)
+        public async Task<IActionResult> Create([Bind("PurId,PerDate,SupId,ItemId,Qty,UnitPrice,Total1,Discount,Total2,GstId,CgstAmount,SgstAmount,IgstAmount,Total3,UserId,Remark,CreatedAt")] PurchaseTb purchaseTb)
         {
             if (ModelState.IsValid)
             {
                 var itemdata = _context.ItemTb.FirstOrDefault(p => p.ItemId == purchaseTb.ItemId);
-                var classdata=_context.ClassTb.FirstOrDefault(c=>c.ClassId==itemdata.ItemClassId);
-                var gstdata = _context.GstTb.FirstOrDefault(g => g.GstId==classdata.GstId);
-                var supplierdata=_context.SupplierTb.FirstOrDefault(s=>s.SupId==purchaseTb.SupId);
+                var classdata = _context.ClassTb.FirstOrDefault(c => c.ClassId == itemdata.ItemClassId);
+                var gstdata = _context.GstTb.FirstOrDefault(g => g.GstId == classdata.GstId);
+                var supplierdata = _context.SupplierTb.FirstOrDefault(s => s.SupId == purchaseTb.SupId);
 
                 var cgst = gstdata.Cgst;
-                purchaseTb.Total1 = purchaseTb.Qty *itemdata.ItemPurchaseRate;
+                purchaseTb.Total1 = purchaseTb.Qty * itemdata.ItemPurchaseRate;
                 purchaseTb.Total2 = (double)(purchaseTb.Total1 - (purchaseTb.Discount * purchaseTb.Total1) / 100);
-                purchaseTb.GstId=gstdata.GstId;
-                if(supplierdata.SupType=="gujarat")
+                purchaseTb.GstId = gstdata.GstId;
+                if (supplierdata.SupType == "gujarat")
                 {
                     purchaseTb.CgstAmount = (purchaseTb.Total2 * (float)gstdata.Cgst) / 100;
                     purchaseTb.SgstAmount = (purchaseTb.Total2 * (float)gstdata.Sgst) / 100;
@@ -86,12 +86,12 @@ namespace IMS.Controllers
                 {
                     purchaseTb.CgstAmount = 0;
                     purchaseTb.SgstAmount = 0;
-                    purchaseTb.IgstAmount =  (purchaseTb.Total2 * (float)gstdata.Igst) / 100;
+                    purchaseTb.IgstAmount = (purchaseTb.Total2 * (float)gstdata.Igst) / 100;
                 }
 
-                purchaseTb.Total3 =purchaseTb.Total2+ purchaseTb.CgstAmount + purchaseTb.SgstAmount + purchaseTb.IgstAmount;
+                purchaseTb.Total3 = purchaseTb.Total2 + purchaseTb.CgstAmount + purchaseTb.SgstAmount + purchaseTb.IgstAmount;
                 purchaseTb.UserId = (int)HttpContext.Session.GetInt32("UserId");
-
+                purchaseTb.UnitPrice = itemdata.ItemPurchaseRate;
                 _context.Add(purchaseTb);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -128,7 +128,7 @@ namespace IMS.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PurId,PerDate,SupId,ItemId,Qty,Total1,Discount,Total2,GstId,CgstAmount,SgstAmount,IgstAmount,Total3,UserId,Remark,CreatedAt")] PurchaseTb purchaseTb)
+        public async Task<IActionResult> Edit(int id, [Bind("PurId,PerDate,SupId,ItemId,Qty,UnitPrice,Total1,Discount,Total2,GstId,CgstAmount,SgstAmount,IgstAmount,Total3,UserId,Remark,CreatedAt")] PurchaseTb purchaseTb)
         {
             if (id != purchaseTb.PurId)
             {
@@ -139,6 +139,31 @@ namespace IMS.Controllers
             {
                 try
                 {
+                    var itemdata = _context.ItemTb.FirstOrDefault(p => p.ItemId == purchaseTb.ItemId);
+                    var classdata = _context.ClassTb.FirstOrDefault(c => c.ClassId == itemdata.ItemClassId);
+                    var gstdata = _context.GstTb.FirstOrDefault(g => g.GstId == classdata.GstId);
+                    var supplierdata = _context.SupplierTb.FirstOrDefault(s => s.SupId == purchaseTb.SupId);
+
+                    var cgst = gstdata.Cgst;
+                    purchaseTb.Total1 = purchaseTb.Qty * itemdata.ItemPurchaseRate;
+                    purchaseTb.Total2 = (double)(purchaseTb.Total1 - (purchaseTb.Discount * purchaseTb.Total1) / 100);
+                    purchaseTb.GstId = gstdata.GstId;
+                    if (supplierdata.SupType == "gujarat")
+                    {
+                        purchaseTb.CgstAmount = (purchaseTb.Total2 * (float)gstdata.Cgst) / 100;
+                        purchaseTb.SgstAmount = (purchaseTb.Total2 * (float)gstdata.Sgst) / 100;
+                        purchaseTb.IgstAmount = 0;
+                    }
+                    else
+                    {
+                        purchaseTb.CgstAmount = 0;
+                        purchaseTb.SgstAmount = 0;
+                        purchaseTb.IgstAmount = (purchaseTb.Total2 * (float)gstdata.Igst) / 100;
+                    }
+
+                    purchaseTb.Total3 = purchaseTb.Total2 + purchaseTb.CgstAmount + purchaseTb.SgstAmount + purchaseTb.IgstAmount;
+                    purchaseTb.UserId = (int)HttpContext.Session.GetInt32("UserId");
+                    purchaseTb.UnitPrice = itemdata.ItemPurchaseRate;
                     _context.Update(purchaseTb);
                     await _context.SaveChangesAsync();
                 }

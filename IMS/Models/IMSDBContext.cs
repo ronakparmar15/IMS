@@ -35,6 +35,7 @@ namespace IMS.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+                //optionsBuilder.EnableSensitiveDataLogging();
                 ConfigurationBuilder confb = new ConfigurationBuilder();
                 optionsBuilder.UseSqlServer(confb.Build().GetSection("DBConnectionStrings").Value);
             }
@@ -208,6 +209,8 @@ namespace IMS.Models
 
                 entity.Property(e => e.Total3).HasColumnName("total3");
 
+                entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
+
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.Gst)
@@ -293,6 +296,12 @@ namespace IMS.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CustomerType)
+                    .IsRequired()
+                    .HasColumnName("customer_type")
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Discount).HasColumnName("discount");
 
                 entity.Property(e => e.GstId).HasColumnName("gst_id");
@@ -325,6 +334,8 @@ namespace IMS.Models
                 entity.Property(e => e.Total2).HasColumnName("total2");
 
                 entity.Property(e => e.Total3).HasColumnName("total3");
+
+                entity.Property(e => e.UnitPrice).HasColumnName("unit_price");
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
