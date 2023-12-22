@@ -6,7 +6,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<div class="container">
 <h1>Purchase</h1>
 
 @if (@HttpContextAccessor.HttpContext.Session.GetInt32("createandupdate") == 1)
@@ -145,4 +145,5 @@
 }
     </tbody>
 </table>
+    </div>
     </div>
