@@ -10,10 +10,12 @@
 <h4>PurchaseTb</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="PurId" />
+                <div class="row">
+                    <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="PerDate" class="control-label"></label>
                 <input asp-for="PerDate" class="form-control" />
@@ -23,7 +25,10 @@
                 <label asp-for="SupId" class="control-label"></label>
                 <select asp-for="SupId" class="form-control" asp-items="ViewBag.SupId"></select>
                 <span asp-validation-for="SupId" class="text-danger"></span>
-            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
             <div class="form-group">
                 <label asp-for="ItemId" class="control-label"></label>
                 <select asp-for="ItemId" class="form-control" asp-items="ViewBag.ItemId"></select>
@@ -33,20 +38,27 @@
                 <label asp-for="Qty" class="control-label"></label>
                 <input asp-for="Qty" class="form-control" />
                 <span asp-validation-for="Qty" class="text-danger"></span>
-            </div>
+                        </div>
+                    </div>
+                        <div class="col-md-6">
+
             <div class="form-group">
                 <label asp-for="Discount" class="control-label"></label>
                 <input asp-for="Discount" class="form-control" />
                 <span asp-validation-for="Discount" class="text-danger"></span>
-            </div>
+                        </div>
+                        </div>
+                        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="Remark" class="control-label"></label>
                 <input asp-for="Remark" class="form-control" />
                 <span asp-validation-for="Remark" class="text-danger"></span>
-            </div>
+                        </div>
+                    </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+                    </div>
+                </div>
         </form>
     </div>
 </div>

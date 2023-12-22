@@ -10,10 +10,13 @@
 <h4>ItemTb</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ItemId" />
+                <div class="row">
+                    <div class="col-md-6">
+
             <div class="form-group">
                 <label asp-for="ItemName" class="control-label"></label>
                 <input asp-for="ItemName" class="form-control" />
@@ -23,7 +26,9 @@
                 <label asp-for="ItemPurchaseRate" class="control-label"></label>
                 <input asp-for="ItemPurchaseRate" class="form-control" />
                 <span asp-validation-for="ItemPurchaseRate" class="text-danger"></span>
-            </div>
+                        </div>
+                        </div>
+                        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="ItemSalesRate" class="control-label"></label>
                 <input asp-for="ItemSalesRate" class="form-control" />
@@ -33,20 +38,27 @@
                 <label asp-for="ItemStatus" class="control-label"></label>
                 <input asp-for="ItemStatus" class="form-control" />
                 <span asp-validation-for="ItemStatus" class="text-danger"></span>
-            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
             <div class="form-group">
                 <label asp-for="ItemClassId" class="control-label"></label>
                 <select asp-for="ItemClassId" class="form-control" asp-items="ViewBag.ItemClassId"></select>
                 <span asp-validation-for="ItemClassId" class="text-danger"></span>
-            </div>
+                        </div>
+                        </div>
+                        <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="ItemHsn" class="control-label"></label>
                 <input asp-for="ItemHsn" class="form-control" />
                 <span asp-validation-for="ItemHsn" class="text-danger"></span>
-            </div>
+                        </div>
+                    </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
+                    </div>
+                </div>
         </form>
     </div>
 </div>
