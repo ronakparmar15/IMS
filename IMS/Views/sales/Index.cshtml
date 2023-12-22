@@ -6,7 +6,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<div class="container">
+ 
 <h1>Sales</h1>
 
 @if (@HttpContextAccessor.HttpContext.Session.GetInt32("createandupdate") == 1)
@@ -16,6 +17,9 @@
         <a asp-action="Create">Add Sales</a>
     </p>
 }
+
+
+<div style="overflow-x:auto;">
 <table class="table">
     <thead>
         <tr>
@@ -167,3 +171,5 @@
 }
     </tbody>
 </table>
+    </div>
+</div>
