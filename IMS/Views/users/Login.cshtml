@@ -60,6 +60,13 @@
     <link rel="stylesheet" href="~/admin/css/style.css">
 </head>
 <body class="account-page">
+    @if (TempData.ContainsKey("InvalidLogin"))
+    {
+       <script>
+            alert('@TempData["InvalidLogin"]');
+       </script>
+
+    }
 
     <div class="main-wrapper">
         <div class="account-content">
@@ -77,13 +84,13 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
                                 <label asp-for="Username" class="control-label"></label>
-                                <input asp-for="Username" class="form-control" placeholder="Enter Username "/>
+                                <input asp-for="Username" class="form-control" placeholder="Enter Username " required/>
                                 @* //<img src="~/admin/img/icons/mail.svg" alt="img"> *@
                                 <span asp-validation-for="Username" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Password" class="control-label"></label>
-                                <input asp-for="Password" class="form-control" placeholder="Enter Password " />
+                                <input asp-for="Password" class="form-control" placeholder="Enter Password " required />
                                 <span class="fas toggle-password fa-eye-slash"></span>
                                 <span asp-validation-for="Password" class="text-danger"></span>
                                 

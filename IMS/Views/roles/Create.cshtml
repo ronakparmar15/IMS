@@ -13,35 +13,47 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="RoleName" class="control-label"></label>
-                <input asp-for="RoleName" class="form-control" />
-                <span asp-validation-for="RoleName" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="RoleName" class="control-label"></label>
+                        <input asp-for="RoleName" class="form-control" />
+                        <span asp-validation-for="RoleName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PermissionCreateUpdate" class="control-label"></label>
+                        <input asp-for="PermissionCreateUpdate" class="form-control" />
+                        <span asp-validation-for="PermissionCreateUpdate" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="RoleStatus" class="control-label"></label>
+                        <input asp-for="RoleStatus" class="form-control" />
+                        <span asp-validation-for="RoleStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PermissionDelete" class="control-label"></label>
+                        <input asp-for="PermissionDelete" class="form-control" />
+                        <span asp-validation-for="PermissionDelete" class="text-danger"></span>
+                    </div>
+                    </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="PermissionView" class="control-label"></label>
+                        <input asp-for="PermissionView" class="form-control" />
+                        <span asp-validation-for="PermissionView" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="RoleStatus" class="control-label"></label>
-                <input asp-for="RoleStatus" class="form-control" />
-                <span asp-validation-for="RoleStatus" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PermissionCreateUpdate" class="control-label"></label>
-                <input asp-for="PermissionCreateUpdate" class="form-control" />
-                <span asp-validation-for="PermissionCreateUpdate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PermissionDelete" class="control-label"></label>
-                <input asp-for="PermissionDelete" class="form-control" />
-                <span asp-validation-for="PermissionDelete" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PermissionView" class="control-label"></label>
-                <input asp-for="PermissionView" class="form-control" />
-                <span asp-validation-for="PermissionView" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+
     </div>
 </div>
 

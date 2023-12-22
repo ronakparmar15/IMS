@@ -1,0 +1,41 @@
+﻿@model IEnumerable<IMS.Models.stokes>
+
+
+@{
+    ViewData["Title"] = "report2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Purchase&Sale-Report</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Item Id</th>
+            <th>Total Purchase Quantity</th>
+            <th>Total Sales Quantity</th>
+            <th>Net Quantity</th>
+            <th>Total Purchase(Rs)</th>
+            <th>Total Sales(Rs)</th>
+            <th>Net Price(Rs)</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var entry in Model)
+    {
+        <tr>
+            <td>@entry.ItemId</td>
+            <td>@entry.PurchaseQty</td>
+            <td>@entry.SalesQty</td>
+            <td>@entry.NetQty</td>
+            <td>@entry.PurchaseTotal3</td>
+            <td>@entry.SalesTotal3</td>
+            <td>@entry.NetTotal</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-controller="sales" asp-action="DownloadPdf">Generate PDF</a>
+

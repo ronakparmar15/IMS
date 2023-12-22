@@ -1,15 +1,20 @@
 ﻿@model IEnumerable<IMS.Models.ClassTb>
-
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Session
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Category</h1>
+@if (@HttpContextAccessor.HttpContext.Session.GetInt32("createandupdate") == 1)
+{
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <p>
+        <a asp-action="Create">Add Category</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -61,10 +66,22 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Gst.GstName)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ClassId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ClassId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ClassId">Delete</a>
+                <td>
+                    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("createandupdate") == 1)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.ClassId">Edit</a>
+                    } |
+                    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("view") == 1)
+                    {
+                        <a asp-action="Details" asp-route-id="@item.ClassId">Details</a>
+                    } |
+                    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("delete") == 1)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.ClassId">Delete</a>
+                    }
+                 
+                 
+               
             </td>
         </tr>
 }

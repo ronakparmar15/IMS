@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IMS.Models;
 using Microsoft.AspNetCore.Http;
+using System.Data;
 
 namespace IMS.Controllers
 {
@@ -69,16 +70,33 @@ namespace IMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(userTb);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    var udata = _context.UserTb.FirstOrDefault(s => s.Username == userTb.Username);
+                    if(udata == null)
+                    {
+                        _context.Add(userTb);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }else
+                    {
+                        TempData["userexist"] = "User is already exist!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                }catch (Exception ex) 
+                {
+                    Console.WriteLine(ex.ToString());
+                    TempData["userexist"] = "User is already exist!";
+                    return RedirectToAction(nameof(Index));
+                }
+                
             }
             ViewData["RoleId"] = new SelectList(_context.RoleTb, "RoleId", "RoleName", userTb.RoleId);
             return View(userTb);
         }
 
         //GET: users/Login
-        public async Task<IActionResult> Login()
+        public  IActionResult Login()
         {
             ViewData["RoleId"] = new SelectList(_context.RoleTb, "RoleId", "RoleName");
             return View();
@@ -87,24 +105,44 @@ namespace IMS.Controllers
         //POST: users/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(UserTb newuser)
+        public  IActionResult Login(UserTb newuser)
         {
-            var user = _context.UserTb.FirstOrDefault(u => u.Username == newuser.Username && u.Password == newuser.Password && u.RoleId==newuser.RoleId);
-
-            if (user != null)
+            try
             {
-                // Store user's Id in session
-                HttpContext.Session.SetInt32("UserId", user.UserId);
-                HttpContext.Session.SetString("UserName", user.Username);
+                var user = _context.UserTb.FirstOrDefault(u => u.Username == newuser.Username && u.Password == newuser.Password && u.RoleId == newuser.RoleId);
+                var role = _context.RoleTb.FirstOrDefault(r => r.RoleId == user.RoleId);
+                if (user != null)
+                {
+                    if(user.Status==0)
+                    {
+                        TempData["InvalidLogin"] = "Ristrict to Login!";
+                        return RedirectToAction(nameof(Login));
+                    }
+                    // Store user's Id in session
+                    HttpContext.Session.SetInt32("UserId", user.UserId);
+                    HttpContext.Session.SetString("UserName", user.Username);
+                    HttpContext.Session.SetString("RoleName", role.RoleName.ToUpper());
+                    //permission
+                    HttpContext.Session.SetInt32("createandupdate", role.PermissionCreateUpdate);
+                    HttpContext.Session.SetInt32("delete", role.PermissionDelete);
+                    HttpContext.Session.SetInt32("view", role.PermissionView);
 
-                // return RedirectToAction(nameof(Index));
-                return RedirectToAction("Index", "Home");
-            }
-            else
+                    // return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    TempData["InvalidLogin"] = "Invalid Username OR Password";
+                    return RedirectToAction(nameof(Login));
+                }
+            }catch (Exception ex) 
             {
                 TempData["InvalidLogin"] = "Invalid Username OR Password";
+                Console.WriteLine(ex.Message);
                 return RedirectToAction(nameof(Login));
             }
+            
+            
         }
         // GET: users/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -128,6 +166,7 @@ namespace IMS.Controllers
             // Clear user's session data
             HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("UserName");
+            HttpContext.Session.Remove("RoleName");
 
             // Redirect to the login page or any other page after logout
             return RedirectToAction(nameof(Login));

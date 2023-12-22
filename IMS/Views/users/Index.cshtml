@@ -4,11 +4,17 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (TempData.ContainsKey("userexist"))
+{
+    <script>
+        alert('@TempData["userexist"]');
+    </script>
 
-<h1>Index</h1>
+}
+<h1>Users</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add User</a>
 </p>
 <table class="table">
     <thead>

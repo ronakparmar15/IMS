@@ -25,7 +25,10 @@
 
     <link rel="stylesheet" href="~/admin/css/style.css">
 </head>
+
 <body>
+
+
     <div id="global-loader">
         <div class="whirly-loader"> </div>
     </div>
@@ -73,110 +76,6 @@
                 </li>
 
 
-                <li class="nav-item dropdown has-arrow flag-nav">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="javascript:void(0);" role="button">
-                        <img src="~/admin/img/flags/us1.png" alt="" height="20">
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="~/admin/img/flags/us.png" alt="" height="16"> English
-                        </a>
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="~/admin/img/flags/fr.png" alt="" height="16"> French
-                        </a>
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="~/admin/img/flags/es.png" alt="" height="16"> Spanish
-                        </a>
-                        <a href="javascript:void(0);" class="dropdown-item">
-                            <img src="~/admin/img/flags/de.png" alt="" height="16"> German
-                        </a>
-                    </div>
-                </li>
-
-
-                <li class="nav-item dropdown">
-                    <a href="javascript:void(0);" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
-                        <img src="~/admin/img/icons/notification-bing.svg" alt="img"> <span class="badge rounded-pill">4</span>
-                    </a>
-                    <div class="dropdown-menu notifications">
-                        <div class="topnav-dropdown-header">
-                            <span class="notification-title">Notifications</span>
-                            <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
-                        </div>
-                        <div class="noti-content">
-                            <ul class="notification-list">
-                                <li class="notification-message">
-                                    <a href="activities.html">
-                                        <div class="media d-flex">
-                                            <span class="avatar flex-shrink-0">
-                                                <img alt="" src="~/admin/img/profiles/avatar-02.jpg">
-                                            </span>
-                                            <div class="media-body flex-grow-1">
-                                                <p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
-                                                <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="activities.html">
-                                        <div class="media d-flex">
-                                            <span class="avatar flex-shrink-0">
-                                                <img alt="" src="~/admin/img/profiles/avatar-03.jpg">
-                                            </span>
-                                            <div class="media-body flex-grow-1">
-                                                <p class="noti-details"><span class="noti-title">Tarah Shropshire</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
-                                                <p class="noti-time"><span class="notification-time">6 mins ago</span></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="activities.html">
-                                        <div class="media d-flex">
-                                            <span class="avatar flex-shrink-0">
-                                                <img alt="" src="~/admin/img/profiles/avatar-06.jpg">
-                                            </span>
-                                            <div class="media-body flex-grow-1">
-                                                <p class="noti-details"><span class="noti-title">Misty Tison</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
-                                                <p class="noti-time"><span class="notification-time">8 mins ago</span></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="activities.html">
-                                        <div class="media d-flex">
-                                            <span class="avatar flex-shrink-0">
-                                                <img alt="" src="~/admin/img/profiles/avatar-17.jpg">
-                                            </span>
-                                            <div class="media-body flex-grow-1">
-                                                <p class="noti-details"><span class="noti-title">Rolland Webber</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
-                                                <p class="noti-time"><span class="notification-time">12 mins ago</span></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="notification-message">
-                                    <a href="activities.html">
-                                        <div class="media d-flex">
-                                            <span class="avatar flex-shrink-0">
-                                                <img alt="" src="~/admin/img/profiles/avatar-13.jpg">
-                                            </span>
-                                            <div class="media-body flex-grow-1">
-                                                <p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added new task <span class="noti-title">Private chat module</span></p>
-                                                <p class="noti-time"><span class="notification-time">2 days ago</span></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="topnav-dropdown-footer">
-                            <a href="activities.html">View all Notifications</a>
-                        </div>
-                    </div>
-                </li>
 
                 <li class="nav-item dropdown has-arrow main-drop">
                     <a href="javascript:void(0);" class="dropdown-toggle nav-link userset" data-bs-toggle="dropdown">
@@ -193,21 +92,21 @@
                                     <span class="status online"></span>
                                 </span>
                                 <div class="profilesets">
-                                    <h5>Admin</h5>
-                                    <h6>
-                                         @if (!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("UserName")))
-                                        {
-                                            <p class="text-dark"> Welcome:-@HttpContextAccessor.HttpContext.Session.GetString("UserName") </p>
 
-                                        } 
+                                    @if (!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("UserName")))
+                                    {
+                                        <h4>@HttpContextAccessor.HttpContext.Session.GetString("RoleName")</h4>
+                                        <h5 class="text-dark">@HttpContextAccessor.HttpContext.Session.GetString("UserName") </h5>
+                                    }
 
-                                    </h6>
-                                    
+
+
                                 </div>
                             </div>
+
                             <hr class="m-0">
-                            <a class="dropdown-item" href="profile.html"> <i class="me-2" data-feather="user"></i> My Profile</a>
-                            <a class="dropdown-item" href="generalsettings.html"><i class="me-2" data-feather="settings"></i>Settings</a>
+                            <a class="dropdown-item"> <i class="me-2" data-feather="user"></i> My Profile</a>
+                            <a class="dropdown-item"><i class="me-2" data-feather="settings"></i>Settings</a>
                             <hr class="m-0">
                             @* <a class="dropdown-item logout pb-0" href="signin.html"><img src="~/admin/img/icons/log-out.svg" class="me-2" alt="img">Logout</a> *@
                             @if (!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("UserName")))
@@ -221,150 +120,288 @@
             </ul>
 
 
-            <div class="dropdown mobile-user-menu">
-                <a href="javascript:void(0);" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="profile.html">My Profile</a>
-                    <a class="dropdown-item" href="generalsettings.html">Settings</a>
-                    <a class="dropdown-item" href="signin.html">Logout</a>
+        </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("RoleName")))
+    {
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("RoleName") == "ADMIN")
+        {
+            <h6> Admin:-@HttpContextAccessor.HttpContext.Session.GetString("RoleName") </h6>
+
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-inner slimscroll">
+                    <div id="sidebar-menu" class="sidebar-menu">
+                        <ul>
+                            <li class="active">
+                                <a asp-controller="home" asp-action="Index"><img src="~/admin/img/icons/dashboard.svg" alt="img"><span> Dashboard</span> </a>
+                            </li>
+
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/users1.svg" alt="img"><span> Roles</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="roles" asp-action="Index">Role List</a></li>
+                                    <li><a asp-controller="roles" asp-action="Create">Add Role </a></li>
+                                </ul>
+                            </li>
+
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/users1.svg" alt="img"><span> Users</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="users" asp-action="Index">Users List</a></li>
+                                    <li><a asp-controller="users" asp-action="Create">New User </a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/users1.svg" alt="img"><span> Suppliers</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="suppliers" asp-action="Index">Suppliers List</a></li>
+                                    <li><a asp-controller="suppliers" asp-action="Create">New Suppliers </a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/product.svg" alt="img"><span> Product</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="class" asp-action="Index">Category List</a></li>
+                                    <li><a asp-controller="class" asp-action="Create">Add Category</a></li>
+                                    <li><a asp-controller="items" asp-action="Index">Product List</a></li>
+                                    <li><a asp-controller="items" asp-action="Create">Add Product</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/purchase1.svg" alt="img"><span> Purchase</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="purchase" asp-action="Index">Purchase List</a></li>
+                                    <li><a asp-controller="purchase" asp-action="Create">Add Purchase</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/sales1.svg" alt="img"><span> Sales</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="sales" asp-action="Index">Sales List</a></li>
+                                    <li><a asp-controller="sales" asp-action="Create">New Sales</a></li>
+                                </ul>
+                            </li>
+
+
+
+
+
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/places.svg" alt="img"><span> Places</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="states" asp-action="Index">State list</a></li>
+                                    <li><a asp-controller="states" asp-action="Create">New State </a></li>
+                                </ul>
+                            </li>
+
+
+
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><i data-feather="layout"></i> <span> Table </span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a href="tables-basic.html">Basic Tables </a></li>
+                                    <li><a href="data-tables.html">Data Table </a></li>
+                                </ul>
+                            </li>
+
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/settings.svg" alt="img"><span> Settings</span> <span class="menu-arrow"></span></a>
+                                <ul>
+
+                                    <li><a asp-controller="gst" asp-action="Index">Tax Rates List</a></li>
+                                    <li><a asp-controller="gst" asp-action="Create">Add Tax Rates</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/purchase1.svg" alt="img"><span> Stokes</span> <span class="menu-arrow"></span></a>
+                                <ul>
+
+                                    <li><a asp-controller="sales" asp-action="Report2">Stokes Report</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-        </div>
-        </div>
 
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-inner slimscroll">
-                <div id="sidebar-menu" class="sidebar-menu">
-                    <ul>
-                        <li class="active">
-                        <a asp-controller="home" asp-action="Index"><img src="~/admin/img/icons/dashboard.svg" alt="img"><span> Dashboard</span> </a>
-                        </li>
 
-                    <li class="submenu">
-                        <a href="javascript:void(0);"><img src="~/admin/img/icons/users1.svg" alt="img"><span> Roles</span> <span class="menu-arrow"></span></a>
+            //ending of role:admin
+        }
+        else if (@HttpContextAccessor.HttpContext.Session.GetString("RoleName") == "OPERATOR")
+        {
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-inner slimscroll">
+                    <div id="sidebar-menu" class="sidebar-menu">
                         <ul>
-                            <li><a asp-controller="roles" asp-action="Index">Role List</a></li>
-                            <li><a asp-controller="roles" asp-action="Create">Add Role </a></li>                       
-                        </ul>
-                    </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/users1.svg" alt="img"><span> Suppliers</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="suppliers" asp-action="Index">Suppliers List</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/product.svg" alt="img"><span> Product</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="class" asp-action="Index">Category List</a></li>
+                                    <li><a asp-controller="items" asp-action="Index">Product List</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/purchase1.svg" alt="img"><span> Purchase</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="purchase" asp-action="Index">Purchase List</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/sales1.svg" alt="img"><span> Sales</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="sales" asp-action="Index">Sales List</a></li>
+                                </ul>
+                            </li>
 
-                    <li class="submenu">
-                        <a href="javascript:void(0);"><img src="~/admin/img/icons/users1.svg" alt="img"><span> Users</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                            <li><a asp-controller="users" asp-action="Index">Users List</a></li>
-                            <li><a asp-controller="users" asp-action="Create">New User </a></li>
+
+
+
+
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/places.svg" alt="img"><span> Places</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="states" asp-action="Index">State list</a></li>
+                                </ul>
+                            </li>
+
+
+
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><i data-feather="layout"></i> <span> Table </span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a href="tables-basic.html">Basic Tables </a></li>
+                                    <li><a href="data-tables.html">Data Table </a></li>
+                                </ul>
+                            </li>
+
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/settings.svg" alt="img"><span> Settings</span> <span class="menu-arrow"></span></a>
+                                <ul>
+
+                                    <li><a asp-controller="gst" asp-action="Index">Tax Rates List</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/purchase1.svg" alt="img"><span> Stokes</span> <span class="menu-arrow"></span></a>
+                                <ul>
+
+                                    <li><a asp-controller="sales" asp-action="report2">Stokes Report</a></li>
+                                </ul>
+                            </li>
                         </ul>
-                    </li>
-                    <li class="submenu">
-                        <a href="javascript:void(0);"><img src="~/admin/img/icons/users1.svg" alt="img"><span> Suppliers</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                            <li><a asp-controller="suppliers" asp-action="Index">Suppliers List</a></li>
-                            <li><a asp-controller="suppliers" asp-action="Create">New Suppliers </a></li>
-                        </ul>
-                    </li>0
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="~/admin/img/icons/product.svg" alt="img"><span> Product</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                            <li><a asp-controller="class" asp-action="Index">Category List</a></li>
-                            <li><a asp-controller="class" asp-action="Create">Add Category</a></li>
-                            <li><a asp-controller="items" asp-action="Index">Product List</a></li>
-                            <li><a asp-controller="items" asp-action="Create">Add Product</a></li>
-                        </ul>
-                    </li>
-                    <li class="submenu">
-                        <a href="javascript:void(0);"><img src="~/admin/img/icons/purchase1.svg" alt="img"><span> Purchase</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                            <li><a asp-controller="purchase" asp-action="Index">Purchase List</a></li>
-                            <li><a asp-controller="purchase" asp-action="Create">Add Purchase</a></li>
-                        </ul>
-                    </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="~/admin/img/icons/sales1.svg" alt="img"><span> Sales</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                            <li><a asp-controller="sales" asp-action="Index">Sales List</a></li>
-                            <li><a asp-controller="sales" asp-action="Create">New Sales</a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="~/admin/img/icons/expense1.svg" alt="img"><span> Expense</span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="expenselist.html">Expense List</a></li>
-                                <li><a href="createexpense.html">Add Expense</a></li>
-                                <li><a href="expensecategory.html">Expense Category</a></li>
-                            </ul>
-                        </li>
-                       
-                        
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="~/admin/img/icons/return1.svg" alt="img"><span> Return</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                            <li><a href="purchasereturnlist.html">Purchase Return List</a></li>
-                            <li><a href="createpurchasereturn.html">Add Purchase Return </a></li>
-                            <li><a href="salesreturnlist.html">Sales Return List</a></li>
-                            <li><a href="createsalesreturn.html">Add Sales Return </a></li>
-                            </ul>
-                        </li>
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="~/admin/img/icons/places.svg" alt="img"><span> Places</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                            <li><a asp-controller="states" asp-action="Index">State list</a></li>
-                            <li><a asp-controller="states" asp-action="Create">New State </a></li>
-                            </ul>
-                        </li>
-                      
-                      
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><i data-feather="bar-chart-2"></i> <span> Charts </span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="chart-apex.html">Apex Charts</a></li>
-                                <li><a href="chart-js.html">Chart Js</a></li>
-                                <li><a href="chart-morris.html">Morris Charts</a></li>
-                                <li><a href="chart-flot.html">Flot Charts</a></li>
-                                <li><a href="chart-peity.html">Peity Charts</a></li>
-                            </ul>
-                        </li>
-                      
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><i data-feather="layout"></i> <span> Table </span> <span class="menu-arrow"></span></a>
-                            <ul>
-                                <li><a href="tables-basic.html">Basic Tables </a></li>
-                                <li><a href="data-tables.html">Data Table </a></li>
-                            </ul>
-                        </li>
-                       
-                        <li class="submenu">
-                            <a href="javascript:void(0);"><img src="~/admin/img/icons/settings.svg" alt="img"><span> Settings</span> <span class="menu-arrow"></span></a>
-                        <ul>
-                            
-                            <li><a asp-controller="gst" asp-action="Index">Tax Rates List</a></li>
-                            <li><a asp-controller="gst" asp-action="Create">Add Tax Rates</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="page-wrapper">
-            @RenderBody()
-        </div>
-            @RenderSection("Scripts", required: false)
+            <h6> Operator:-@HttpContextAccessor.HttpContext.Session.GetString("RoleName") </h6>
+            //ending of role:operator
+        }
+        else if (@HttpContextAccessor.HttpContext.Session.GetString("RoleName") == "VIEW")
+        {
+            <div class="sidebar" id="sidebar">
+                <div class="sidebar-inner slimscroll">
+                    <div id="sidebar-menu" class="sidebar-menu">
+                        <ul>
 
-        <script src="~/admin/js/jquery-3.6.0.min.js"></script>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/users1.svg" alt="img"><span> Suppliers</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="suppliers" asp-action="Index">Suppliers List</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/product.svg" alt="img"><span> Product</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="class" asp-action="Index">Category List</a></li>
+                                    <li><a asp-controller="items" asp-action="Index">Product List</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/purchase1.svg" alt="img"><span> Purchase</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="purchase" asp-action="Index">Purchase List</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/sales1.svg" alt="img"><span> Sales</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="sales" asp-action="Index">Sales List</a></li>
+                                </ul>
+                            </li>
 
-        <script src="~/admin/js/feather.min.js"></script>
 
-        <script src="~/admin/js/jquery.slimscroll.min.js"></script>
 
-        <script src="~/admin/js/jquery.dataTables.min.js"></script>
-        <script src="~/admin/js/dataTables.bootstrap4.min.js"></script>
 
-        <script src="~/admin/js/bootstrap.bundle.min.js"></script>
 
-        <script src="~/admin/plugins/apexchart/apexcharts.min.js"></script>
-        <script src="~/admin/plugins/apexchart/chart-data.js"></script>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/places.svg" alt="img"><span> Places</span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a asp-controller="states" asp-action="Index">State list</a></li>
+                                </ul>
+                            </li>
 
-        <script src="~/admin/js/script.js"></script>
+
+
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><i data-feather="layout"></i> <span> Table </span> <span class="menu-arrow"></span></a>
+                                <ul>
+                                    <li><a href="tables-basic.html">Basic Tables </a></li>
+                                    <li><a href="data-tables.html">Data Table </a></li>
+                                </ul>
+                            </li>
+
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/settings.svg" alt="img"><span> Settings</span> <span class="menu-arrow"></span></a>
+                                <ul>
+
+                                    <li><a asp-controller="gst" asp-action="Index">Tax Rates List</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu">
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/purchase1.svg" alt="img"><span> Stokes</span> <span class="menu-arrow"></span></a>
+                                <ul>
+
+                                    <li><a asp-controller="sales" asp-action="report2">Stokes Report</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <h6> View:-@HttpContextAccessor.HttpContext.Session.GetString("RoleName") </h6>
+            //ending of role:view
+        }
+
+    }
+
+
+    <div class="page-wrapper">
+        @RenderBody()
+    </div>
+    @RenderSection("Scripts", required: false)
+
+    <script src="~/admin/js/jquery-3.6.0.min.js"></script>
+
+    <script src="~/admin/js/feather.min.js"></script>
+
+    <script src="~/admin/js/jquery.slimscroll.min.js"></script>
+
+    <script src="~/admin/js/jquery.dataTables.min.js"></script>
+    <script src="~/admin/js/dataTables.bootstrap4.min.js"></script>
+
+    <script src="~/admin/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/admin/plugins/apexchart/apexcharts.min.js"></script>
+    <script src="~/admin/plugins/apexchart/chart-data.js"></script>
+
+    <script src="~/admin/js/script.js"></script>
 </body>
 </html>

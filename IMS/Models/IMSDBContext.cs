@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
+using IMS.Models;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -30,6 +31,8 @@ namespace IMS.Models
         public virtual DbSet<SupplierTb> SupplierTb { get; set; }
         public virtual DbSet<TransactionTb> TransactionTb { get; set; }
         public virtual DbSet<UserTb> UserTb { get; set; }
+
+        public virtual DbSet<stokes> Stokes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -478,5 +481,7 @@ namespace IMS.Models
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<IMS.Models.stokes> stokes { get; set; }
     }
 }

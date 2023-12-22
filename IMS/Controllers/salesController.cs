@@ -7,6 +7,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IMS.Models;
 using Microsoft.AspNetCore.Http;
+using PdfSharpCore;
+using PdfSharpCore.Pdf;
+using TheArtOfDev.HtmlRenderer.PdfSharp;
+using System.IO;
 
 namespace IMS.Controllers
 {
@@ -23,9 +27,131 @@ namespace IMS.Controllers
         public async Task<IActionResult> Index()
         {
             var iMSDBContext = _context.SalesTb.Include(s => s.Gst).Include(s => s.Item).Include(s => s.User);
+
             return View(await iMSDBContext.ToListAsync());
         }
 
+        //report
+        //r2
+        public async Task<IActionResult> Report2()
+        {
+            var purchaseData = from purchase in _context.PurchaseTb
+                               group purchase by purchase.ItemId into grouped
+                               select new
+                               {
+                                   ItemId = grouped.Key,
+                                   PurchaseQty = grouped.Sum(p => p.Qty),
+                                   PurchaseTotal3 = (decimal)grouped.Sum(p => p.Total3)
+                               };
+
+            var saleData = from sale in _context.SalesTb
+                           group sale by sale.ItemId into grouped
+                           select new
+                           {
+                               ItemId = grouped.Key,
+                               SalesQty = grouped.Sum(s => s.Qty),
+                               SalesTotal3 = (decimal)grouped.Sum(s => s.Total3)
+                           };
+
+            var combinedData = from p in purchaseData
+                               join s in saleData on p.ItemId equals s.ItemId into temp
+                               from s in temp.DefaultIfEmpty()
+                               select new stokes
+                               {
+                                   ItemId = p.ItemId,
+                                   PurchaseQty = p.PurchaseQty,
+                                   PurchaseTotal3 = p.PurchaseTotal3,
+                                   SalesQty = s.SalesQty,
+                                   NetQty=p.PurchaseQty-s.SalesQty,
+                                   NetTotal=s.SalesTotal3-p.PurchaseTotal3,
+                                   SalesTotal3 = s.SalesTotal3
+                               };
+
+            return View( await combinedData.ToListAsync());
+        }
+
+        //pdf
+        public List<stokes> GetReport()
+        {
+            List<stokes> data = new List<stokes>();
+            var purchaseData = from purchase in _context.PurchaseTb
+                               group purchase by purchase.ItemId into grouped
+                               select new
+                               {
+                                   ItemId = grouped.Key,
+                                   PurchaseQty = grouped.Sum(p => p.Qty),
+                                   PurchaseTotal3 = (decimal)grouped.Sum(p => p.Total3)
+                               };
+
+            var saleData = from sale in _context.SalesTb
+                           group sale by sale.ItemId into grouped
+                           select new
+                           {
+                               ItemId = grouped.Key,
+                               SalesQty = grouped.Sum(s => s.Qty),
+                               SalesTotal3 = (decimal)grouped.Sum(s => s.Total3)
+                           };
+
+            var combinedData = from p in purchaseData
+                               join s in saleData on p.ItemId equals s.ItemId into temp
+                               from s in temp.DefaultIfEmpty()
+                               select new stokes
+                               {
+                                   ItemId = p.ItemId,
+                                   PurchaseQty = p.PurchaseQty,
+                                   PurchaseTotal3 = p.PurchaseTotal3,
+                                   SalesQty = s.SalesQty,
+                                   NetQty = p.PurchaseQty - s.SalesQty,
+                                   NetTotal = s.SalesTotal3 - p.PurchaseTotal3,
+                                   SalesTotal3 = s.SalesTotal3
+                               };
+
+            data = combinedData.ToList();
+            return data;
+        }
+
+        [HttpGet("DownloadPdf")]
+        public IActionResult DownloadPdf()
+        {
+            var document = new PdfDocument();
+            decimal total = 0;
+            List<stokes> sdata = GetReport();
+
+            string htmlstring = "<table style='width:500px; border:solid; border-width:1px;'> <thead style='border:solid balck; border-width:2px;'> <tr>";
+            htmlstring += "<th style='width:10%; text-align:left;'>ItemId</th>";
+            htmlstring += "<th style='width:10%; text-align:left;'>Purchase Quantity</th>";
+            htmlstring += "<th style='width:10%; text-align:left;'>Sales Quantity</th>";
+            htmlstring += "<th style='width:10%; text-align:left;'>Net Quantity</th>";
+            htmlstring += "<th style='width:10%; text-align:left;'>Total Purchase(Rs)</th>";
+            htmlstring += "<th style='width:10%; text-align:left;'>Total Sales(Rs)</th>";
+            htmlstring += "<th style='width:10%; text-align:left;'>Net Total(Rs)</th></tr></thead><tbody>";
+
+
+            foreach (stokes obj in sdata)
+            {
+                htmlstring += "<tr><td style='width:10%;text-align:left;'>" + obj.ItemId.ToString() + "</td>";
+                htmlstring += "<td style='width:10%; text-align:left; '>" + obj.PurchaseQty.ToString() + "</td>";
+                htmlstring += "<td style='width:10%; text-align:left;'>" + obj.SalesQty.ToString() + "</td>";
+                htmlstring += "<td style='width:10%;text-align:left;' > " + obj.NetQty.ToString() + " </ td > ";
+                htmlstring += "<td style='width:10%;text-align:left;' > " + obj.PurchaseTotal3.ToString() + " </ td > ";
+                htmlstring += "<td style='width:10%;text-align:left;' > " + obj.SalesTotal3.ToString() + " </ td > ";
+                htmlstring += "<td style='width:10%;text-align:left;' > " + obj.NetTotal.ToString() + " </ td ></ tr >";
+
+                total += obj.NetTotal;
+            }
+
+            htmlstring += "<tr><td></td><td></td><td></td><td></td><td></td><td>Total:</td><td style='width:7%;text-align:right;'>" + total + "</td></tr></tbody></table> ";
+
+
+            PdfGenerator.AddPdfPages(document, htmlstring, PageSize.A4);
+            byte[] res = null;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                document.Save(ms);
+                res = ms.ToArray();
+            }
+            return File(res, "application/pdf");
+        }
         // GET: sales/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -44,7 +170,7 @@ namespace IMS.Controllers
                 return NotFound();
             }
 
-            return View(salesTb);
+            return View( salesTb);
         }
 
         // GET: sales/Create
@@ -166,10 +292,10 @@ namespace IMS.Controllers
                 try
                 {
 
-                    var itemdata = _context.ItemTb.FirstOrDefault(i => i.ItemId == salesTb.ItemId);
-                    var classdata = _context.ClassTb.FirstOrDefault(c=>c.ClassId==itemdata.ItemClassId);
-                    var gstdata = _context.GstTb.FirstOrDefault(g => g.GstId == classdata.GstId);
-                    var purchasedata = _context.PurchaseTb.FirstOrDefault(p => p.ItemId == salesTb.ItemId);
+                    //var itemdata = _context.ItemTb.FirstOrDefault(i => i.ItemId == salesTb.ItemId);
+                    //var classdata = _context.ClassTb.FirstOrDefault(c=>c.ClassId==itemdata.ItemClassId);
+                    //var gstdata = _context.GstTb.FirstOrDefault(g => g.GstId == classdata.GstId);
+                    //var purchasedata = _context.PurchaseTb.FirstOrDefault(p => p.ItemId == salesTb.ItemId);
 
 
                     //int total_sold_item = _context.SalesTb.Where(i => i.ItemId == salesTb.ItemId).Sum(i => i.Qty);
@@ -221,6 +347,12 @@ namespace IMS.Controllers
                     //}
                     ////_context.Update(salesTb);
                     ////await _context.SaveChangesAsync();
+                    ///
+
+                    //----
+                    _context.Add(salesTb);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -277,5 +409,9 @@ namespace IMS.Controllers
         {
             return _context.SalesTb.Any(e => e.SalesId == id);
         }
+
+
+
+      
     }
 }
