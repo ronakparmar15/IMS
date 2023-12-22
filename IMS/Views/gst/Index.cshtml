@@ -34,9 +34,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Active)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -57,9 +54,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
             </td>
                 <td>
                     @if (@HttpContextAccessor.HttpContext.Session.GetInt32("createandupdate") == 1)

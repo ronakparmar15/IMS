@@ -28,9 +28,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.PermissionView)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -53,12 +50,8 @@
                 @Html.DisplayFor(modelItem => item.PermissionView)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
                 <a asp-action="Edit" asp-route-id="@item.RoleId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RoleId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RoleId">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.RoleId">Details</a> 
             </td>
         </tr>
 }

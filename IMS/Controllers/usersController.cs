@@ -115,7 +115,7 @@ namespace IMS.Controllers
                 {
                     if(user.Status==0)
                     {
-                        TempData["InvalidLogin"] = "Ristrict to Login!";
+                        TempData["InvalidLogin"] = "Restrict to Login!";
                         return RedirectToAction(nameof(Login));
                     }
                     // Store user's Id in session
