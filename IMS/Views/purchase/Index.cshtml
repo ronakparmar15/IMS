@@ -22,7 +22,7 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PerDate)
+                @Html.DisplayNameFor(model => model.Item)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Qty)
@@ -31,22 +31,7 @@
                 @Html.DisplayNameFor(model => model.UnitPrice)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Total1)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Total2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CgstAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SgstAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IgstAmount)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Total3)
@@ -55,19 +40,13 @@
                 @Html.DisplayNameFor(model => model.Remark)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CreatedAt)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Gst)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Item)
-            </th>
+            </th>          
             <th>
                 @Html.DisplayNameFor(model => model.Sup)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                @Html.DisplayNameFor(model => model.PerDate)
             </th>
             <th></th>
         </tr>
@@ -75,8 +54,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+
             <td>
-                @Html.DisplayFor(modelItem => item.PerDate)
+                @Html.DisplayFor(modelItem => item.Item.ItemName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Qty)
@@ -85,22 +65,7 @@
                 @Html.DisplayFor(modelItem => item.UnitPrice)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Total1)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Discount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CgstAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SgstAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IgstAmount)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Total3)
@@ -109,19 +74,13 @@
                 @Html.DisplayFor(modelItem => item.Remark)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Gst.GstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Item.ItemName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Sup.SupName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Password)
+                @Html.DisplayFor(modelItem => item.PerDate)
             </td>
             <td>
 
