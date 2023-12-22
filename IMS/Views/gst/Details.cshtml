@@ -4,11 +4,11 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h1>Details</h1>
+<div class="container">
+<h1>GST Detail</h1>
 
 <div>
-    <h4>GstTb</h4>
+    @* <h4> GstTb </h4> *@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -52,4 +52,5 @@
 <div>
     <a asp-action="Edit" asp-route-id="@Model.GstId">Edit</a> |
     <a asp-action="Index">Back to List</a>
+</div>
 </div>
