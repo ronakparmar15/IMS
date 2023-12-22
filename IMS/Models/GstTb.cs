@@ -34,5 +34,12 @@ namespace IMS.Models
         public virtual ICollection<ClassTb> ClassTb { get; set; }
         public virtual ICollection<PurchaseTb> PurchaseTb { get; set; }
         public virtual ICollection<SalesTb> SalesTb { get; set; }
+        public string StatusDisplay
+        {
+            get
+            {
+                return Active == 1 ? "Active" : "Inactive";
+            }
+        }
     }
 }

@@ -31,5 +31,33 @@ namespace IMS.Models
         public DateTime CreatedAt { get; set; }
 
         public virtual ICollection<UserTb> UserTb { get; set; }
+        public string StatusDisplay
+        {
+            get
+            {
+                return RoleStatus == 1 ? "Active" : "Inactive";
+            }
+        }
+        public string createupdate
+        {
+            get
+            {
+                return PermissionCreateUpdate == 1 ? "Yes" : "No";
+            }
+        }
+        public string delete
+        {
+            get
+            {
+                return PermissionDelete == 1 ? "Yes" : "No";
+            }
+        }
+        public string view
+        {
+            get
+            {
+                return PermissionView == 1 ? "Yes" : "No";
+            }
+        }
     }
 }

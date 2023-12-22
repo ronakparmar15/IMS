@@ -55,7 +55,8 @@
                 @Html.DisplayFor(modelItem => item.Igst)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ClassStatus)
+                        @Html.DisplayFor(modelItem => item.StatusDisplay)
+                @* @Html.DisplayFor(modelItem => item.ClassStatus) *@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Gst.GstName)

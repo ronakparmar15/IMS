@@ -51,7 +51,10 @@
                 @Html.DisplayFor(modelItem => item.Phone)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                        
+                @Html.DisplayFor(modelItem => item.StatusDisplay)
+    @* 
+                @Html.DisplayFor(modelItem => item.Status) *@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Role.RoleName)

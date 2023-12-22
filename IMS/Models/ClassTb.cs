@@ -40,5 +40,12 @@ namespace IMS.Models
 
         public virtual GstTb Gst { get; set; }
         public virtual ICollection<ItemTb> ItemTb { get; set; }
+        public string StatusDisplay
+        {
+            get
+            {
+                return ClassStatus == 1 ? "Active" : "Inactive";
+            }
+        }
     }
 }

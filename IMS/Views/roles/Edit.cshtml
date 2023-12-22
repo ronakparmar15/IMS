@@ -21,22 +21,24 @@
             </div>
             <div class="form-group">
                 <label asp-for="RoleStatus" class="control-label"></label>
-                <input asp-for="RoleStatus" class="form-control" />
+                    @Html.DropDownListFor(Model=>Model.RoleStatus,ViewBag.abc as SelectList,htmlAttributes: new{@class="form-control"} )
+               @*  <input asp-for="RoleStatus" class="form-control" /> *@
                 <span asp-validation-for="RoleStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PermissionCreateUpdate" class="control-label"></label>
-                <input asp-for="PermissionCreateUpdate" class="form-control" />
+                    <input asp-for="PermissionCreateUpdate" class="form-control" />
                 <span asp-validation-for="PermissionCreateUpdate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PermissionDelete" class="control-label"></label>
-                <input asp-for="PermissionDelete" class="form-control" />
+
+                    <input asp-for="PermissionDelete" class="form-control" />
                 <span asp-validation-for="PermissionDelete" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PermissionView" class="control-label"></label>
-                <input asp-for="PermissionView" class="form-control" />
+                   <input asp-for="PermissionView" class="form-control" />
                 <span asp-validation-for="PermissionView" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -38,16 +38,21 @@
                 @Html.DisplayFor(modelItem => item.RoleName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.RoleStatus)
+                        @Html.DisplayFor(modelItem => item.StatusDisplay)
+                @* @Html.DisplayFor(modelItem => item.RoleStatus) *@
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PermissionCreateUpdate)
+
+                        @Html.DisplayFor(modelItem => item.createupdate)
+                @* @Html.DisplayFor(modelItem => item.PermissionCreateUpdate) *@
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PermissionDelete)
+                        @Html.DisplayFor(modelItem => item.delete)
+                @* @Html.DisplayFor(modelItem => item.PermissionDelete) *@
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PermissionView)
+                        @Html.DisplayFor(modelItem => item.view)
+                @* @Html.DisplayFor(modelItem => item.PermissionView) *@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.RoleId">Edit</a> |

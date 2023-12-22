@@ -79,6 +79,25 @@ namespace IMS.Controllers
             {
                 return NotFound();
             }
+            List<SelectListItem> li = new List<SelectListItem>();
+            li.Add(new SelectListItem() { Text = "Active", Value = "1" });
+            li.Add(new SelectListItem() { Text = "In-Active", Value = "0" });
+            ViewBag.abc = new SelectList(li, "Value", "Text");
+
+            List<SelectListItem> lic = new List<SelectListItem>();
+            lic.Add(new SelectListItem() { Text = "Yes", Value = "1" });
+            lic.Add(new SelectListItem() { Text = "No", Value = "0" });
+            ViewBag.cre = new SelectList(lic, "Value", "Text");
+
+            List<SelectListItem> lide = new List<SelectListItem>();
+            lide.Add(new SelectListItem() { Text = "Yes", Value = "1" });
+            lide.Add(new SelectListItem() { Text = "No", Value = "0" });
+            ViewBag.del = new SelectList(lide, "Value", "Text");
+
+            List<SelectListItem> liv = new List<SelectListItem>();
+            liv.Add(new SelectListItem() { Text = "Yes", Value = "1" });
+            liv.Add(new SelectListItem() { Text = "No", Value = "0" });
+            ViewBag.vie = new SelectList(liv, "Value", "Text");
 
             var roleTb = await _context.RoleTb.FindAsync(id);
             if (roleTb == null)

@@ -58,6 +58,8 @@ namespace IMS.Controllers
         public IActionResult Create()
         {
             ViewData["RoleId"] = new SelectList(_context.RoleTb, "RoleId", "RoleName");
+            
+
             return View();
         }
 
@@ -151,7 +153,10 @@ namespace IMS.Controllers
             {
                 return NotFound();
             }
-
+            List<SelectListItem> li = new List<SelectListItem>();
+            li.Add(new SelectListItem() { Text = "Active", Value = "1" });
+            li.Add(new SelectListItem() { Text = "In-Active", Value = "0" });
+            ViewBag.abc = new SelectList(li, "Value", "Text");
             var userTb = await _context.UserTb.FindAsync(id);
             if (userTb == null)
             {
