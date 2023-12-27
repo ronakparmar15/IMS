@@ -117,16 +117,18 @@ namespace IMS.Controllers
         {
             var document = new PdfDocument();
             decimal total = 0;
+            decimal tp = 0;
+            decimal ts = 0;
             List<stokes> sdata = GetReport();
 
             string htmlstring = "<table style='width:500px; border:solid; border-width:1px;'> <thead style='border:solid balck; border-width:2px;'> <tr>";
             htmlstring += "<th style='width:10%; text-align:left;'>ItemId</th>";
-            htmlstring += "<th style='width:10%; text-align:left;'>Purchase Quantity</th>";
-            htmlstring += "<th style='width:10%; text-align:left;'>Sales Quantity</th>";
-            htmlstring += "<th style='width:10%; text-align:left;'>Net Quantity</th>";
+            htmlstring += "<th style='width:10%; text-align:left;'>Purchase Qty</th>";
+            htmlstring += "<th style='width:10%; text-align:left;'>Sales Qty</th>";
+            htmlstring += "<th style='width:10%; text-align:left;'>Qty In-hand</th>";
             htmlstring += "<th style='width:10%; text-align:left;'>Total Purchase(Rs)</th>";
             htmlstring += "<th style='width:10%; text-align:left;'>Total Sales(Rs)</th>";
-            htmlstring += "<th style='width:10%; text-align:left;'>Net Total(Rs)</th></tr></thead><tbody>";
+            htmlstring += "<th style='width:10%; text-align:left;'>Pending Amount(Rs)</th></tr></thead><tbody>";
 
 
             foreach (stokes obj in sdata)
@@ -140,9 +142,11 @@ namespace IMS.Controllers
                 htmlstring += "<td style='width:10%;text-align:left;' > " + obj.NetTotal.ToString() + " </ td ></ tr >";
 
                 total += obj.NetTotal;
+                tp += obj.PurchaseTotal3;
+                ts += obj.SalesTotal3;
             }
 
-            htmlstring += "<tr><td></td><td></td><td></td><td></td><td></td><td>Total:</td><td style='width:7%;text-align:right;'>" + total + "</td></tr></tbody></table> ";
+            htmlstring += "<tr><td>Total:</td><td></td><td></td><td></td><td>" + tp+"</td><td>"+ts+"</td><td style='width:7%;text-align:right;'>" + total + "</td></tr></tbody></table> ";
 
 
             PdfGenerator.AddPdfPages(document, htmlstring, PageSize.A4);
