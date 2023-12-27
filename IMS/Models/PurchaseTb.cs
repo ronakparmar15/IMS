@@ -18,7 +18,7 @@ namespace IMS.Models
         public int SupId { get; set; }
         [Display(Name = "Item Id")]
         public int ItemId { get; set; }
-        [Display(Name = "Quentity")]
+        [Display(Name = "Qty")]
         public int Qty { get; set; }
         [Display(Name = "Unit Price")]
         public double UnitPrice { get; set; }

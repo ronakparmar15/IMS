@@ -26,7 +26,7 @@ namespace IMS.Models
         public decimal Phone { get; set; }
         [Display(Name = "Status")]
         public byte Status { get; set; }
-        [Display(Name = "Role Id")]
+        [Display(Name = "Role")]
         public int RoleId { get; set; }
         [Display(Name = "Created At")]
         public DateTime CreatedAt { get; set; }

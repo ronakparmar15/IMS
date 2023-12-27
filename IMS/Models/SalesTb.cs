@@ -22,11 +22,11 @@ namespace IMS.Models
         public string CustomerAddress { get; set; }
         [Display(Name = "Customer Mobile")]
         public decimal CustomerMobile { get; set; }
-        [Display(Name = "Customer Type")]
+        [Display(Name = "Customer State")]
         public string CustomerType { get; set; }
         [Display(Name = "Item Id")]
         public int ItemId { get; set; }
-        [Display(Name = "Quentity")]
+        [Display(Name = "Qty")]
         public int Qty { get; set; }
         [Display(Name = "Unit Price")]
         public double UnitPrice { get; set; }

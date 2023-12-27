@@ -13,11 +13,11 @@ namespace IMS.Models
         public int ItemId { get; set; }
         [Display(Name = "Item Name")]
         public string ItemName { get; set; }
-        [Display(Name = "Purchase Quentity")]
+        [Display(Name = "Purchase Qty")]
         public int PurchaseQty { get; set; }
-        [Display(Name = "Sales Quentity")]
+        [Display(Name = "Sales Qty")]
         public int SalesQty { get; set; }
-        [Display(Name = "Net Quentity")]
+        [Display(Name = "Net Qty")]
         public int NetQty { get; set; }
         [Display(Name = "Purchase Total3")]
         public decimal PurchaseTotal3 { get; set; }

@@ -14,9 +14,9 @@ namespace IMS.Models
         {
             ItemTb = new HashSet<ItemTb>();
         }
-        [Display(Name ="Class Id")]
+        [Display(Name ="Category Id")]
         public int ClassId { get; set; }
-        [Display(Name = "Class Name")]
+        [Display(Name = "Category Name")]
         public string ClassName { get; set; }
         [Display(Name = "CGST")]
 
@@ -33,7 +33,7 @@ namespace IMS.Models
         [Display(Name = "Created At")]
 
         public DateTime CreatedAt { get; set; }
-        [Display(Name = "GSTID")]
+        [Display(Name = "GST")]
 
         public int? GstId { get; set; }
       

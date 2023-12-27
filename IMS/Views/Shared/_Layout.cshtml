@@ -10,7 +10,7 @@
     <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern,  html5, responsive">
     <meta name="author" content="Dreamguys - Bootstrap Admin Template">
     <meta name="robots" content="noindex, nofollow">
-    <title>Dreams Pos admin template</title>
+    <title>IMS</title>
 
     <link rel="shortcut icon" type="image/x-icon" href="~/admin/img/favicon.png">
 
@@ -104,10 +104,10 @@
                                 </div>
                             </div>
 
-                            <hr class="m-0">
+                         @*    <hr class="m-0">
                             <a class="dropdown-item"> <i class="me-2" data-feather="user"></i> My Profile</a>
                             <a class="dropdown-item"><i class="me-2" data-feather="settings"></i>Settings</a>
-                            <hr class="m-0">
+                            <hr class="m-0"> *@
                             @* <a class="dropdown-item logout pb-0" href="signin.html"><img src="~/admin/img/icons/log-out.svg" class="me-2" alt="img">Logout</a> *@
                             @if (!string.IsNullOrEmpty(@HttpContextAccessor.HttpContext.Session.GetString("UserName")))
                             {
@@ -197,16 +197,16 @@
 
 
 
-                            <li class="submenu">
+                           @*  <li class="submenu">
                                 <a href="javascript:void(0);"><i data-feather="layout"></i> <span> Table </span> <span class="menu-arrow"></span></a>
                                 <ul>
                                     <li><a href="tables-basic.html">Basic Tables </a></li>
                                     <li><a href="data-tables.html">Data Table </a></li>
                                 </ul>
-                            </li>
+                            </li> *@
 
                             <li class="submenu">
-                                <a href="javascript:void(0);"><img src="~/admin/img/icons/settings.svg" alt="img"><span> Settings</span> <span class="menu-arrow"></span></a>
+                                <a href="javascript:void(0);"><img src="~/admin/img/icons/settings.svg" alt="img"><span> Tax</span> <span class="menu-arrow"></span></a>
                                 <ul>
 
                                     <li><a asp-controller="gst" asp-action="Index">Tax Rates List</a></li>

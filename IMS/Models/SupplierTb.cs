@@ -21,7 +21,7 @@ namespace IMS.Models
         public string SupName { get; set; }
         [Display(Name = "Supplier Address")]
         public string SupAddress { get; set; }
-        [Display(Name = "Supplier Type")]
+        [Display(Name = "Supplier State")]
         public string SupType { get; set; }
         [Display(Name = "Supplier Mobile")]
         public decimal SupMobile { get; set; }
