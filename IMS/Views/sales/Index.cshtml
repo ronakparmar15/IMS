@@ -118,14 +118,11 @@
                 @Html.DisplayFor(modelItem => item.Gst.GstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.User.Password)
+                @Html.DisplayFor(modelItem => item.User.Username)
             </td>
             <td>
 
-                    @if (@HttpContextAccessor.HttpContext.Session.GetInt32("createandupdate") == 1)
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.SalesId">Edit</a>
-                    } |
+                    |
                     @if (@HttpContextAccessor.HttpContext.Session.GetInt32("view") == 1)
                     {
                         <a asp-action="Details" asp-route-id="@item.SalesId">Details</a>

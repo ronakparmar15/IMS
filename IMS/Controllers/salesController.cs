@@ -302,62 +302,63 @@ namespace IMS.Controllers
                 try
                 {
 
-                    //var itemdata = _context.ItemTb.FirstOrDefault(i => i.ItemId == salesTb.ItemId);
-                    //var classdata = _context.ClassTb.FirstOrDefault(c=>c.ClassId==itemdata.ItemClassId);
-                    //var gstdata = _context.GstTb.FirstOrDefault(g => g.GstId == classdata.GstId);
-                    //var purchasedata = _context.PurchaseTb.FirstOrDefault(p => p.ItemId == salesTb.ItemId);
+                    var itemdata = _context.ItemTb.FirstOrDefault(i => i.ItemId == salesTb.ItemId);
+                    var classdata = _context.ClassTb.FirstOrDefault(c => c.ClassId == itemdata.ItemClassId);
+                    var gstdata = _context.GstTb.FirstOrDefault(g => g.GstId == classdata.GstId);
+                    var purchasedata = _context.PurchaseTb.FirstOrDefault(p => p.ItemId == salesTb.ItemId);
 
 
-                    //int total_sold_item = _context.SalesTb.Where(i => i.ItemId == salesTb.ItemId).Sum(i => i.Qty);
-                    //int total_purchase_item = _context.PurchaseTb.Where(i => i.ItemId == salesTb.ItemId).Sum(i => i.Qty);
+                    int total_sold_item = _context.SalesTb.Where(i => i.ItemId == salesTb.ItemId).Sum(i => i.Qty);
+                    int total_purchase_item = _context.PurchaseTb.Where(i => i.ItemId == salesTb.ItemId).Sum(i => i.Qty);
 
 
-                    //if ((salesTb.Qty + total_sold_item) <= total_purchase_item)
-                    //{
-                    //    if (salesTb.UnitPrice >= itemdata.ItemSalesRate)
-                    //    {
-                    //        salesTb.UnitPrice = salesTb.UnitPrice;
-                    //        salesTb.Total1 = salesTb.UnitPrice * salesTb.Qty;
-                    //        salesTb.Total2 = (double)(salesTb.Total1 - (salesTb.Discount * salesTb.Total1) / 100);
-                    //        salesTb.GstId = gstdata.GstId;
+                    if ((salesTb.Qty + total_sold_item) <= total_purchase_item)
+                    {
+                        if (salesTb.UnitPrice >= itemdata.ItemSalesRate)
+                        {
+                            salesTb.UnitPrice = salesTb.UnitPrice;
+                            salesTb.Total1 = salesTb.UnitPrice * salesTb.Qty;
+                            salesTb.Total2 = (double)(salesTb.Total1 - (salesTb.Discount * salesTb.Total1) / 100);
+                            salesTb.GstId = gstdata.GstId;
 
-                    //        if (salesTb.CustomerType == "gujarat")
-                    //        {
-                    //            salesTb.CgstAmount = (salesTb.Total2 * (float)gstdata.Cgst) / 100;
-                    //            salesTb.SgstAmount = (salesTb.Total2 * (float)gstdata.Sgst) / 100;
-                    //            salesTb.IgstAmount = 0;
-                    //        }
-                    //        else
-                    //        {
-                    //            salesTb.CgstAmount = 0;
-                    //            salesTb.SgstAmount = 0;
-                    //            salesTb.IgstAmount = (salesTb.Total2 * (float)gstdata.Igst) / 100;
-                    //        }
+                            if (salesTb.CustomerType == "gujarat")
+                            {
+                                salesTb.CgstAmount = (salesTb.Total2 * (float)gstdata.Cgst) / 100;
+                                salesTb.SgstAmount = (salesTb.Total2 * (float)gstdata.Sgst) / 100;
+                                salesTb.IgstAmount = 0;
+                            }
+                            else
+                            {
+                                salesTb.CgstAmount = 0;
+                                salesTb.SgstAmount = 0;
+                                salesTb.IgstAmount = (salesTb.Total2 * (float)gstdata.Igst) / 100;
+                            }
 
-                    //        salesTb.Total3 = salesTb.Total2 + salesTb.CgstAmount + salesTb.SgstAmount + salesTb.IgstAmount;
-                    //        salesTb.UserId = (int)HttpContext.Session.GetInt32("UserId");
+                            salesTb.Total3 = salesTb.Total2 + salesTb.CgstAmount + salesTb.SgstAmount + salesTb.IgstAmount;
+                            salesTb.UserId = (int)HttpContext.Session.GetInt32("UserId");
 
 
-                    //        _context.Add(salesTb);
-                    //        await _context.SaveChangesAsync();
-                    //        return RedirectToAction(nameof(Index));
-                    //    }
-                    //    else
-                    //    {
-                    //        //salesTb.UnitPrice = itemdata.ItemSalesRate;
-                    //        //price <=sellingprice
-                    //        return RedirectToAction(nameof(Index));
-                    //    }
+                            _context.Add(salesTb);
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction(nameof(Index));
+                        }
+                        else
+                        {
+                            //salesTb.UnitPrice = itemdata.ItemSalesRate;
+                            //price <=sellingprice
+                            return RedirectToAction(nameof(Index));
+                        }
 
-                    //}
-                    //else
-                    //{
-                    //    //qty not available
-                    //    return RedirectToAction(nameof(Index));
-                    //}
-                    ////_context.Update(salesTb);
-                    ////await _context.SaveChangesAsync();
-                    ///
+                    }
+                    else
+                    {
+                        //qty not available
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                    //_context.Update(salesTb);
+                    //await _context.SaveChangesAsync();
+                    
 
                     //----
                     _context.Add(salesTb);

@@ -22,8 +22,18 @@ namespace IMS.Controllers
         // GET: purchase
         public async Task<IActionResult> Index()
         {
-            var iMSDBContext = _context.PurchaseTb.Include(p => p.Gst).Include(p => p.Item).Include(p => p.Sup).Include(p => p.User);
-            return View(await iMSDBContext.ToListAsync());
+           
+            if (!HttpContext.Session.GetInt32("UserId").HasValue)
+            {
+                return RedirectToAction("Login", "users");
+
+            }
+            else
+            {
+                var iMSDBContext = _context.PurchaseTb.Include(p => p.Gst).Include(p => p.Item).Include(p => p.Sup).Include(p => p.User);
+                return View(await iMSDBContext.ToListAsync());
+
+            }
         }
 
         // GET: purchase/Details/5
