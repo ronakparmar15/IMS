@@ -9,6 +9,13 @@
 <div class="container">
  
 <h1>Sales</h1>
+    @if (TempData.ContainsKey("InvalidData"))
+    {
+        <script>
+            alert('@TempData["InvalidData"]');
+        </script>
+
+    }
 
 @if (@HttpContextAccessor.HttpContext.Session.GetInt32("createandupdate") == 1)
 {

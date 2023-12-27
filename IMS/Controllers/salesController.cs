@@ -50,7 +50,8 @@ namespace IMS.Controllers
                            {
                                ItemId = grouped.Key,
                                SalesQty = grouped.Sum(s => s.Qty),
-                               SalesTotal3 = (decimal)grouped.Sum(s => s.Total3)
+                               SalesTotal3 = (decimal)grouped.Sum(s => s.Total3),
+                               
                            };
 
             var combinedData = from p in purchaseData
@@ -63,7 +64,7 @@ namespace IMS.Controllers
                                    PurchaseTotal3 = p.PurchaseTotal3,
                                    SalesQty = s.SalesQty,
                                    NetQty=p.PurchaseQty-s.SalesQty,
-                                   NetTotal=s.SalesTotal3-p.PurchaseTotal3,
+                                   NetTotal= (p.PurchaseQty - s.SalesQty) ,
                                    SalesTotal3 = s.SalesTotal3
                                };
 
@@ -89,7 +90,8 @@ namespace IMS.Controllers
                            {
                                ItemId = grouped.Key,
                                SalesQty = grouped.Sum(s => s.Qty),
-                               SalesTotal3 = (decimal)grouped.Sum(s => s.Total3)
+                               SalesTotal3 = (decimal)grouped.Sum(s => s.Total3),
+                               SalePrice = grouped.Average(s => s.UnitPrice)
                            };
 
             var combinedData = from p in purchaseData
@@ -102,7 +104,7 @@ namespace IMS.Controllers
                                    PurchaseTotal3 = p.PurchaseTotal3,
                                    SalesQty = s.SalesQty,
                                    NetQty = p.PurchaseQty - s.SalesQty,
-                                   NetTotal = s.SalesTotal3 - p.PurchaseTotal3,
+                                   NetTotal = (decimal)((p.PurchaseQty - s.SalesQty)*s.SalePrice),
                                    SalesTotal3 = s.SalesTotal3
                                };
 
@@ -239,6 +241,8 @@ namespace IMS.Controllers
                     {
                         //salesTb.UnitPrice = itemdata.ItemSalesRate;
                         //price <=sellingprice
+                        TempData["InvalidData"] = "Insufficient Price!";
+                        //Console.WriteLine(ex.Message);
                         return RedirectToAction(nameof(Index));
                     }
 
@@ -246,6 +250,8 @@ namespace IMS.Controllers
                 else
                 {
                     //qty not available
+                    TempData["InvalidData"] = "Insufficient Quantity!";
+                    //Console.WriteLine(ex.Message);
                     return RedirectToAction(nameof(Index));
                 }
             }
